@@ -1,0 +1,58 @@
+---
+# tasks file for common
+- name: Install simple programs
+  dnf: name={{ item }} state=present
+  with_items:
+  - '@Development Tools'
+  - ansible
+  - mycli
+  - vagrant
+  - vim
+  - vim-powerline
+  - vlc
+- name: Install and configure php
+  block:
+    - dnf: name={{ item }} state=present
+      with_items:
+        - composer
+        - php
+        - php-bcmath
+        - php-fpm
+        - php-gd
+        - php-intl
+        - php-json
+        - php-mbstring
+        - php-mcrypt
+        - php-opcache
+        - php-pdo
+        - php-soap
+        - php-xdebug
+        - php-xml
+        - php-zip
+      notify:
+        - php-fpm
+    - template: src=templates/php/99-local.ini.j2 dest=/etc/php.d/99-local.ini
+      notify:
+        - php-fpm
+    - template: src=templates/php/www.local.conf.j2 dest=/etc/php-fpm.d/www.local.conf
+      notify:
+        - php-fpm
+    - systemd: name=php-fpm enabled=yes state=started
+- name: Install and configure nginx
+  block:
+    - dnf: name=nginx state=present
+      notify:
+        - nginx
+    - template: src=templates/nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+      notify:
+        - nginx
+    - template: src=templates/nginx/default.conf.j2 dest=/etc/nginx/default.conf
+      notify:
+        - nginx
+    - template: src=templates/nginx/magento2.conf.j2 dest=/etc/nginx/magento2.conf
+      notify:
+        - nginx
+    - template: src=templates/nginx/php-fpm.conf.j2 dest=/etc/nginx/conf.d/php-fpm.conf
+      notify:
+        - nginx
+    - systemd: name=nginx enabled=yes state=started

@@ -1,0 +1,6 @@
+---
+# handlers file for common
+- name: php-fpm
+  systemd: name=php-fpm state=restarted
+- name: nginx
+  systemd: name=nginx state=restarted

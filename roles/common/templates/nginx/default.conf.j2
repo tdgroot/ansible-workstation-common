@@ -1,0 +1,11 @@
+location / {
+    try_files $uri $uri/ @handler;
+}
+
+location @handler { # Use a common front handler
+    rewrite / /index.php;
+}
+
+location  /. { # Disable .htaccess and other hidden files
+    return 404;
+}

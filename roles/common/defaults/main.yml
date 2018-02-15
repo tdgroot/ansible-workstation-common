@@ -1,0 +1,6 @@
+---
+# defaults file for common
+primary_user: timon
+php_fpm_port: 9071
+install_nvidia_drivers: false
+install_steam: false

@@ -1,0 +1,9 @@
+[www]
+
+user = {{ primary_user }}
+group = {{ primary_user }}
+
+listen = 127.0.0.1:{{ php_fpm_port }}
+
+listen.acl_users = nginx
+listen.allowed_clients = 127.0.0.1
