@@ -1,38 +1,40 @@
-Role Name
-=========
+Fedora Workstation Common
+=================================
 
-A brief description of the role goes here.
+Common tasks for installing and configuring Fedora Workstation.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+A running instance of Fedora Workstation with ssh key access to root.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+#### primary_user
+- The user that's primarily going to use this system.
+- **Default value**: `timon`
 
-Dependencies
-------------
+#### php_fpm_port
+- The php fpm port.
+- **Default value**: `9071` (PHP 7.1)
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+#### install_nvidia_drivers
+- Whether to install Nvidia drivers or not.
+- **Default value**: `false`
+
+#### install_steam
+- Whether to install Steam or not.
+- **Default value**: `false`
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: all
       roles:
-         - { role: username.rolename, x: 42 }
+         - common
 
 License
 -------
 
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+MIT
