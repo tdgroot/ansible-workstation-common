@@ -1,0 +1,9 @@
+[Unit]
+Description=MailCatcher Service
+After=network.service vagrant.mount
+[Service]
+Type=simple
+ExecStart=/root/.gem/ruby/bin/mailcatcher --foreground
+User=root
+[Install]
+WantedBy=multi-user.target

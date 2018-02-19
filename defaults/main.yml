@@ -1,6 +1,9 @@
 ---
 # defaults file for common
 primary_user: timon
+primary_group: timon
 php_fpm_port: 9071
 install_nvidia_drivers: false
 install_steam: false
+mysql_root_password: mysql
+mysql_old_root_password: ''

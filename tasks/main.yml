@@ -6,10 +6,42 @@
   - '@Development Tools'
   - ansible
   - mycli
+  - python2-mysql
+  - redhat-rpm-config
+  - ruby
+  - ruby-devel
   - vagrant
   - vim
   - vim-powerline
   - vlc
+- name: Install and configure mariadb
+  block:
+    - dnf: name={{ item }} state=present
+      with_items:
+        - mariadb
+        - mariadb-server
+    - systemd: name=mariadb enabled=true state=started
+- name: Set mariadb root password
+  mysql_user: name=root password={{ mysql_root_password }} login_password={{ mysql_old_root_password }}
+  when: mysql_root_password != mysql_old_root_password
+- name: Create ~/.my.cnf
+  template:
+    src: templates/mariadb/.my.cnf.j2
+    dest: "/home/{{ primary_user }}/.my.cnf"
+    owner: "{{ primary_user }}"
+    group: "{{ primary_group }}"
+- name: Install redis
+  block:
+    - dnf: name=redis state=present
+    - systemd: name=redis enabled=true state=started
+- name: Install mailcatcher
+  gem: name=mailcatcher state=present
+- name: Create mailcatcher service
+  template: src=templates/mailcatcher/mailcatcher.service.j2 dest=/usr/lib/systemd/system/mailcatcher.service
+  notify:
+    - systemd
+- name: Run mailcatcher service
+  systemd: name=mailcatcher enabled=true state=started
 - name: Install and configure php
   block:
     - dnf: name={{ item }} state=present
@@ -37,7 +69,8 @@
     - template: src=templates/php/www.local.conf.j2 dest=/etc/php-fpm.d/www.local.conf
       notify:
         - php-fpm
-    - systemd: name=php-fpm enabled=yes state=started
+    - systemd: name=php-fpm enabled=true state=started
+# TODO: Install nginx_config_reloader.
 - name: Install and configure nginx
   block:
     - dnf: name=nginx state=present
@@ -55,4 +88,10 @@
     - template: src=templates/nginx/php-fpm.conf.j2 dest=/etc/nginx/conf.d/php-fpm.conf
       notify:
         - nginx
-    - systemd: name=nginx enabled=yes state=started
+    - template: src=templates/nginx/mailcatcher.conf.j2 dest=/etc/nginx/conf.d/mailcatcher.conf
+      notify:
+        - nginx
+    - systemd: name=nginx enabled=true state=started
+# TODO: Install nvidia drivers
+# TODO: Install steam
+# TODO: Install oh-my-zsh
