@@ -15,6 +15,10 @@ Role Variables
 - The user that's primarily going to use this system.
 - **Default value**: `timon`
 
+#### primary_groups
+- The group that's primarily going to use this system.
+- **Default value**: `timon`
+
 #### php_fpm_port
 - The php fpm port.
 - **Default value**: `9071` (PHP 7.1)
@@ -26,6 +30,14 @@ Role Variables
 #### install_steam
 - Whether to install Steam or not.
 - **Default value**: `false`
+
+#### mysql_root_password
+- The mysql root password to be configured.
+- **Default value**: `mysql`
+
+#### mysql_old_root_password
+- The current mysql root password.
+- **Default value**: `''`
 
 Example Playbook
 ----------------
