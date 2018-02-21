@@ -48,7 +48,7 @@ Example Playbook
 
     - hosts: all
       roles:
-         - { role: tdgroot.fedora-workstation }
+         - { role: tdgroot.workstation-common }
 
 License
 -------
