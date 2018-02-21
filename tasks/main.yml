@@ -5,15 +5,26 @@
   with_items:
   - '@Development Tools'
   - ansible
+  - filezilla
+  - gcc-c++
+  - gnome-terminal-nautilus
+  - gnome-tweak-tool
+  - htop
+  - libselinux-python
   - mycli
   - python2-mysql
   - redhat-rpm-config
   - ruby
   - ruby-devel
+  - sqlite
+  - sqlite-devel
+  - terminator
   - vagrant
   - vim
   - vim-powerline
   - vlc
+- name: Disable selinux
+  selinux: state=disabled
 - name: Install and configure mariadb
   block:
     - dnf: name={{ item }} state=present
@@ -24,6 +35,7 @@
 - name: Set mariadb root password
   mysql_user: name=root password={{ mysql_root_password }} login_password={{ mysql_old_root_password }}
   when: mysql_root_password != mysql_old_root_password
+  ignore_errors: true
 - name: Create ~/.my.cnf
   template:
     src: templates/mariadb/.my.cnf.j2
@@ -66,7 +78,7 @@
     - template: src=templates/php/99-local.ini.j2 dest=/etc/php.d/99-local.ini
       notify:
         - php-fpm
-    - template: src=templates/php/www.local.conf.j2 dest=/etc/php-fpm.d/www.local.conf
+    - template: src=templates/php/local.www.conf.j2 dest=/etc/php-fpm.d/local.www.conf
       notify:
         - php-fpm
     - systemd: name=php-fpm enabled=true state=started
@@ -92,6 +104,26 @@
       notify:
         - nginx
     - systemd: name=nginx enabled=true state=started
-# TODO: Install nvidia drivers
-# TODO: Install steam
+- name: Install RPM Fusion (free)
+  dnf:
+    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm
+    state: present
+- name: Install RPM Fusion (nonfree)
+  dnf:
+    name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-27.noarch.rpm
+    state: present
+- name: Install Google Chrome
+  dnf:
+    name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    state: present
+  when: install_chrome
+- name: Install Nvidia drivers
+  dnf: name={{ item }} state=present
+  with_items:
+    - xorg-x11-drv-nvidia
+    - akmod-nvidia
+  when: install_nvidia_drivers
+- name: Install Steam
+  dnf: name=steam state=present
+  when: install_steam
 # TODO: Install oh-my-zsh
