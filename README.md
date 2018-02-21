@@ -43,6 +43,11 @@ Role Variables
 - The current mysql root password.
 - **Default value**: `''`
 
+Dependencies
+------------
+
+- [geerlingguy.homebrew](https://galaxy.ansible.com/geerlingguy/homebrew/)
+
 Example Playbook
 ----------------
 
