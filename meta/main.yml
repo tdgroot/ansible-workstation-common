@@ -12,10 +12,15 @@ galaxy_info:
   - name: Fedora
     versions:
       - 27
+  - name: MacOSX
+    versions:
+      - all
+      - any
 
   galaxy_tags:
     - php
     - nginx
     - fedora
 
-dependencies: []
+dependencies:
+  - geerlingguy.homebrew

@@ -1,2 +1,5 @@
 ---
 # tasks file for common/macos
+- name: Include geerlingguy.homebrew
+  include_role:
+    name: geerlingguy.homebrew
