@@ -1,7 +1,7 @@
-Fedora Workstation Common
+Workstation Common
 =================================
 
-Common tasks for installing and configuring Fedora Workstation.
+Common tasks for installing and configuring Fedora Workstation and MacOS.
 
 Requirements
 ------------
