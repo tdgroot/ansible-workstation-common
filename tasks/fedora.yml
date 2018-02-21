@@ -55,6 +55,17 @@
     - systemd
 - name: Run mailcatcher service
   systemd: name=mailcatcher enabled=true state=started
+# Remi's RPM repository
+# https://rpms.remirepo.net
+#
+# Command to install:
+# Command to install additional packages:
+#    dnf --enablerepo=remi install php70-php-xxx
+#    dnf --enablerepo=remi install php70
+- name: Install Remi's RPM repository
+  dnf:
+    name: http://rpms.remirepo.net/fedora/remi-release-{{ ansible_distribution_version }}.rpm
+    state: present
 - name: Install and configure php
   block:
     - dnf: name={{ item }} state=present
@@ -107,11 +118,11 @@
     - systemd: name=nginx enabled=true state=started
 - name: Install RPM Fusion (free)
   dnf:
-    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm
+    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
     state: present
 - name: Install RPM Fusion (nonfree)
   dnf:
-    name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-27.noarch.rpm
+    name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
     state: present
 - name: Install Google Chrome
   dnf:
