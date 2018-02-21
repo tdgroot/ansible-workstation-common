@@ -25,7 +25,7 @@ Role Variables
 
 #### install_chrome
 - Whether to install Google Chrome or not.
-- **Default value**: `false`
+- **Default value**: `true`
 
 #### install_nvidia_drivers
 - Whether to install Nvidia drivers or not.
