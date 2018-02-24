@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tdgroot/ansible-workstation-common.svg?branch=master)](https://travis-ci.org/tdgroot/ansible-workstation-common)
+
 Workstation Common
 =================================
 
