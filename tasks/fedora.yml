@@ -144,4 +144,10 @@
     - owncloud-client
     - owncloud-client-nautilus
   when: install_owncloud_client
+- name: Download Atom rpm
+  get_url: url=https://atom.io/download/rpm dest=/tmp/atom.rpm
+  when: install_atom
+- name: Install Atom
+  dnf: name=/tmp/atom.rpm state=latest
+  when: install_atom
 # TODO: Install oh-my-zsh

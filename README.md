@@ -25,6 +25,10 @@ Role Variables
 - The php fpm port.
 - **Default value**: `9071` (PHP 7.1)
 
+#### install_atom
+- Whether to install Atom or not.
+- **Default value**: `true`
+
 #### install_chrome
 - Whether to install Google Chrome or not.
 - **Default value**: `true`
