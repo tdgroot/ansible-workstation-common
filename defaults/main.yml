@@ -5,6 +5,7 @@ primary_group: timon
 php_fpm_port: 9071
 install_chrome: true
 install_nvidia_drivers: false
+install_owncloud_client: true
 install_steam: false
 mysql_root_password: mysql
 mysql_old_root_password: ''

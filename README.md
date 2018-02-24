@@ -31,6 +31,10 @@ Role Variables
 - Whether to install Nvidia drivers or not.
 - **Default value**: `false`
 
+#### install_owncloud_client
+- Whether to install Owncloud client or not.
+- **Default value**: `true`
+
 #### install_steam
 - Whether to install Steam or not.
 - **Default value**: `false`

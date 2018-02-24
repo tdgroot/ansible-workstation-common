@@ -138,4 +138,10 @@
 - name: Install Steam
   dnf: name=steam state=present
   when: install_steam
+- name: Install Owncloud
+  dnf: name={{ item }} state=present
+  with_items:
+    - owncloud-client
+    - owncloud-client-nautilus
+  when: install_owncloud_client
 # TODO: Install oh-my-zsh
