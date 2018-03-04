@@ -13,6 +13,7 @@
   - htop
   - libselinux-python
   - mycli
+  - nano
   - python2-mysql
   - redhat-rpm-config
   - ruby
