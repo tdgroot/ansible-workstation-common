@@ -6,3 +6,5 @@
   systemd: name=nginx state=restarted
 - name: systemd
   systemd: daemon_reload=true
+- name: sysctl
+  command: sysctl -p

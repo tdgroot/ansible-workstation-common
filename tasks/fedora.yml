@@ -150,4 +150,9 @@
 - name: Install Atom
   dnf: name=/tmp/atom.rpm state=latest
   when: install_atom
+- name: Disable ipv6
+  template: src=templates/sysctl/99-ipv6.conf dest=/etc/sysctl.d/99-ipv6.conf
+  notify:
+    - sysctl
+  when: disable_ipv6
 # TODO: Install oh-my-zsh
