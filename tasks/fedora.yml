@@ -1,5 +1,13 @@
 ---
 # tasks file for common/fedora
+- name: Install RPM Fusion (free)
+  dnf:
+    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
+    state: present
+- name: Install RPM Fusion (nonfree)
+  dnf:
+    name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
+    state: present
 - name: Install simple programs
   dnf: name={{ item }} state=present
   with_items:
@@ -117,14 +125,6 @@
       notify:
         - nginx
     - systemd: name=nginx enabled=true state=started
-- name: Install RPM Fusion (free)
-  dnf:
-    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
-    state: present
-- name: Install RPM Fusion (nonfree)
-  dnf:
-    name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
-    state: present
 - name: Install Google Chrome
   dnf:
     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
