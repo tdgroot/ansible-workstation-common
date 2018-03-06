@@ -13,11 +13,15 @@ A running instance of Fedora Workstation with ssh key access to root.
 Role Variables
 --------------
 
+#### disable_ipv6
+- Whether to disable ipv6 or not.
+- **Default value**: `true`
+
 #### primary_user
 - The user that's primarily going to use this system.
 - **Default value**: `timon`
 
-#### primary_groups
+#### primary_group
 - The group that's primarily going to use this system.
 - **Default value**: `timon`
 
@@ -39,6 +43,10 @@ Role Variables
 
 #### install_owncloud_client
 - Whether to install Owncloud client or not.
+- **Default value**: `true`
+
+#### install_spotify
+- Whether to install Spotify or not.
 - **Default value**: `true`
 
 #### install_steam
