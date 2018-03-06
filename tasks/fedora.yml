@@ -154,7 +154,7 @@
   dnf: name=/tmp/atom.rpm state=latest
   when: install_atom
 - name: Install Spotify repository
-  get_url: url=https://negativo17.org/repos/fedora-spotify dest=/etc/yum.repos.d/fedora-spotify.repo
+  get_url: url=https://negativo17.org/repos/fedora-spotify.repo dest=/etc/yum.repos.d/fedora-spotify.repo
   when: install_spotify
 - name: Install Spotify
   dnf: name=spotify state=present
