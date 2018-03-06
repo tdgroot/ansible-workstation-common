@@ -180,6 +180,7 @@
       user:
         name: "{{ primary_user }}"
         shell: /bin/zsh
+  become: true
   become_user: "{{ primary_user }}"
 
 # TODO: Install oh-my-zsh
