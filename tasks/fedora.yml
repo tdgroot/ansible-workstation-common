@@ -153,6 +153,12 @@
 - name: Install Atom
   dnf: name=/tmp/atom.rpm state=latest
   when: install_atom
+- name: Install Spotify repository
+  get_url: url=https://negativo17.org/repos/fedora-spotify dest=/etc/yum.repos.d/fedora-spotify.repo
+  when: install_spotify
+- name: Install Spotify
+  dnf: name=spotify state=present
+  when: install_spotify
 - name: Disable ipv6
   template: src=templates/sysctl/99-ipv6.conf dest=/etc/sysctl.d/99-ipv6.conf
   notify:
