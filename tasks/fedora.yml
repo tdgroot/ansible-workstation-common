@@ -13,6 +13,7 @@
   with_items:
   - '@Development Tools'
   - ansible
+  - bzr
   - cloc
   - filezilla
   - gcc-c++
@@ -182,5 +183,3 @@
         shell: /bin/zsh
   become: true
   become_user: "{{ primary_user }}"
-
-# TODO: Install oh-my-zsh
