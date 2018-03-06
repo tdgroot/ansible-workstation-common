@@ -33,6 +33,7 @@
   - vim
   - vim-powerline
   - vlc
+  - zsh
 - name: Disable selinux
   selinux: state=disabled
 - name: Install and configure mariadb
@@ -156,4 +157,29 @@
   notify:
     - sysctl
   when: disable_ipv6
+- name: Install oh-my-zsh
+  block:
+    - name: Clone oh-my-zsh
+      git:
+        repo: https://github.com/robbyrussell/oh-my-zsh.git
+        dest: "/home/{{ primary_user }}/.oh-my-zsh"
+        clone: true
+        update: true
+      tags:
+        - zsh
+    - name: Register .zshrc existence
+      stat: path="/home/{{ primary_user }}/.zshrc"
+      register: zshrc_file
+    - name: Copy .zshrc
+      copy:
+        src: "/home/{{ primary_user }}/.oh-my-zsh/templates/zshrc.zsh-template"
+        dest: "/home/{{ primary_user }}/.zshrc"
+        remote_src: true
+      when: not zshrc_file.stat.exists
+    - name: Init shell
+      user:
+        name: "{{ primary_user }}"
+        shell: /bin/zsh
+  become_user: "{{ primary_user }}"
+
 # TODO: Install oh-my-zsh
