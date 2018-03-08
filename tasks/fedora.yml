@@ -150,11 +150,16 @@
     - owncloud-client
     - owncloud-client-nautilus
   when: install_owncloud_client
-- name: Download Atom rpm
-  get_url: url=https://atom.io/download/rpm dest=/tmp/atom.rpm
+- name: Import Atom gpgkey
+  rpm_key:
+    key: https://packagecloud.io/AtomEditor/atom/gpgkey
+    state: present
+  when: install_atom
+- name: Install Atom repository
+  template: src=templates/atom/atom.repo dest=/etc/yum.repos.d/atom.repo
   when: install_atom
 - name: Install Atom
-  dnf: name=/tmp/atom.rpm state=latest
+  dnf: name=atom state=present
   when: install_atom
 - name: Install Spotify repository
   get_url: url=https://negativo17.org/repos/fedora-spotify.repo dest=/etc/yum.repos.d/fedora-spotify.repo
