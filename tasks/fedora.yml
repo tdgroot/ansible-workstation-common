@@ -132,6 +132,9 @@
     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
     state: present
   when: install_chrome
+- name: Install Chrome GNOME Shell integration
+  dnf: name=chrome-gnome-shell state=present
+  when: install_chrome
 - name: Install Nvidia drivers
   dnf: name={{ item }} state=present
   with_items:
