@@ -166,6 +166,7 @@
     dest: /usr/lib/systemd/system/nginx-config-reloader.service
   notify:
     - systemd
+    - nginx-config-reloader
 - name: Run nginx-config-reloader service
   systemd: name=nginx-config-reloader enabled=true state=started
 

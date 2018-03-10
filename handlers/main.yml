@@ -8,3 +8,5 @@
   systemd: daemon_reload=true
 - name: sysctl
   command: sysctl -p
+- name: nginx-config-reloader
+  systemd: name=nginx-config-reloader state=restarted
