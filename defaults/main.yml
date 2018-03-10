@@ -6,6 +6,7 @@ primary_group: timon
 php_fpm_port: 9071
 install_atom: true
 install_chrome: true
+install_magerun: true
 install_nvidia_drivers: false
 install_owncloud_client: true
 install_spotify: true
