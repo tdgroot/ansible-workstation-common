@@ -8,6 +8,7 @@
   dnf:
     name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
     state: present
+
 - name: Install simple programs
   dnf: name={{ item }} state=present
   with_items:
@@ -35,15 +36,25 @@
   - vim-powerline
   - vlc
   - zsh
+
 - name: Disable selinux
   selinux: state=disabled
+
+- name: Disable ipv6
+  template: src=templates/sysctl/99-ipv6.conf dest=/etc/sysctl.d/99-ipv6.conf
+  notify:
+    - sysctl
+  when: disable_ipv6
+
 - name: Install and configure mariadb
   block:
-    - dnf: name={{ item }} state=present
+    - name: Install mariadb
+      dnf: name={{ item }} state=present
       with_items:
         - mariadb
         - mariadb-server
-    - systemd: name=mariadb enabled=true state=started
+    - name: Start mariadb service
+      systemd: name=mariadb enabled=true state=started
 - name: Set mariadb root password
   mysql_user: name=root password={{ mysql_root_password }} login_password={{ mysql_old_root_password }}
   when: mysql_root_password != mysql_old_root_password
@@ -54,10 +65,14 @@
     dest: "/home/{{ primary_user }}/.my.cnf"
     owner: "{{ primary_user }}"
     group: "{{ primary_group }}"
+
 - name: Install redis
   block:
-    - dnf: name=redis state=present
-    - systemd: name=redis enabled=true state=started
+    - name: Install redis
+      dnf: name=redis state=present
+    - name: Start redis service
+      systemd: name=redis enabled=true state=started
+
 - name: Install mailcatcher
   gem: name=mailcatcher state=present
 - name: Create mailcatcher service
@@ -66,6 +81,7 @@
     - systemd
 - name: Run mailcatcher service
   systemd: name=mailcatcher enabled=true state=started
+
 # Remi's RPM repository
 # https://rpms.remirepo.net
 #
@@ -79,7 +95,8 @@
     state: present
 - name: Install and configure php
   block:
-    - dnf: name={{ item }} state=present
+    - name: Install php
+      dnf: name={{ item }} state=present
       with_items:
         - composer
         - php
@@ -98,34 +115,46 @@
         - php-zip
       notify:
         - php-fpm
-    - template: src=templates/php/99-local.ini.j2 dest=/etc/php.d/99-local.ini
+    - name: Install php configuration
+      template: src=templates/php/99-local.ini.j2 dest=/etc/php.d/99-local.ini
       notify:
         - php-fpm
-    - template: src=templates/php/local.www.conf.j2 dest=/etc/php-fpm.d/local.www.conf
+    - name: Install php-fpm configuration
+      template: src=templates/php/local.www.conf.j2 dest=/etc/php-fpm.d/local.www.conf
       notify:
         - php-fpm
-    - systemd: name=php-fpm enabled=true state=started
+    - name: Start php-fpm service
+      systemd: name=php-fpm enabled=true state=started
+
 - name: Install and configure nginx
   block:
-    - dnf: name=nginx state=present
+    - name: Install nginx
+      dnf: name=nginx state=present
       notify:
         - nginx
-    - template: src=templates/nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+    - name: Install nginx/nginx.conf
+      template: src=templates/nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf
       notify:
         - nginx
-    - template: src=templates/nginx/default.conf.j2 dest=/etc/nginx/default.conf
+    - name: Install nginx/default.conf
+      template: src=templates/nginx/default.conf.j2 dest=/etc/nginx/default.conf
       notify:
         - nginx
-    - template: src=templates/nginx/magento2.conf.j2 dest=/etc/nginx/magento2.conf
+    - name: Install nginx/magento2.conf
+      template: src=templates/nginx/magento2.conf.j2 dest=/etc/nginx/magento2.conf
       notify:
         - nginx
-    - template: src=templates/nginx/php-fpm.conf.j2 dest=/etc/nginx/conf.d/php-fpm.conf
+    - name: Install nginx/conf.d/php-fpm.conf
+      template: src=templates/nginx/php-fpm.conf.j2 dest=/etc/nginx/conf.d/php-fpm.conf
       notify:
         - nginx
-    - template: src=templates/nginx/mailcatcher.conf.j2 dest=/etc/nginx/conf.d/mailcatcher.conf
+    - name: Install nginx/conf.d/mailcatcher.conf
+      template: src=templates/nginx/mailcatcher.conf.j2 dest=/etc/nginx/conf.d/mailcatcher.conf
       notify:
         - nginx
-    - systemd: name=nginx enabled=true state=started
+    - name: Start nginx service
+      systemd: name=nginx enabled=true state=started
+
 - name: Install nginx_config_reloader
   pip:
     name: git+https://github.com/ByteInternet/nginx_config_reloader#egg=nginx_config_reloader
@@ -138,6 +167,7 @@
     - systemd
 - name: Run nginx-config-reloader service
   systemd: name=nginx-config-reloader enabled=true state=started
+
 - name: Install Google Chrome
   dnf:
     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
@@ -146,21 +176,25 @@
 - name: Install Chrome GNOME Shell integration
   dnf: name=chrome-gnome-shell state=present
   when: install_chrome
+
 - name: Install Nvidia drivers
   dnf: name={{ item }} state=present
   with_items:
     - xorg-x11-drv-nvidia
     - akmod-nvidia
   when: install_nvidia_drivers
+
 - name: Install Steam
   dnf: name=steam state=present
   when: install_steam
+
 - name: Install Owncloud
   dnf: name={{ item }} state=present
   with_items:
     - owncloud-client
     - owncloud-client-nautilus
   when: install_owncloud_client
+
 - name: Import Atom gpgkey
   rpm_key:
     key: https://packagecloud.io/AtomEditor/atom/gpgkey
@@ -172,26 +206,25 @@
 - name: Install Atom
   dnf: name=atom state=present
   when: install_atom
+
 - name: Install Spotify repository
   get_url: url=https://negativo17.org/repos/fedora-spotify.repo dest=/etc/yum.repos.d/fedora-spotify.repo
   when: install_spotify
 - name: Install Spotify
   dnf: name=spotify state=present
   when: install_spotify
+
 - name: Install Virtualbox
   dnf: name=VirtualBox state=present
   when: install_virtualbox
+
 - name: Install Wine
   dnf: name={{ item }} state=present
   with_items:
     - wine
     - winetricks
   when: install_wine
-- name: Disable ipv6
-  template: src=templates/sysctl/99-ipv6.conf dest=/etc/sysctl.d/99-ipv6.conf
-  notify:
-    - sysctl
-  when: disable_ipv6
+
 - name: Install oh-my-zsh
   block:
     - name: Clone oh-my-zsh
