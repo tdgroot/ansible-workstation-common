@@ -167,6 +167,9 @@
 - name: Install Spotify
   dnf: name=spotify state=present
   when: install_spotify
+- name: Install Virtualbox
+  dnf: name=VirtualBox state=present
+  when: install_virtualbox
 - name: Install Wine
   dnf: name={{ item }} state=present
   with_items:
