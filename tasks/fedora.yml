@@ -105,7 +105,6 @@
       notify:
         - php-fpm
     - systemd: name=php-fpm enabled=true state=started
-# TODO: Install nginx_config_reloader.
 - name: Install and configure nginx
   block:
     - dnf: name=nginx state=present
@@ -127,6 +126,18 @@
       notify:
         - nginx
     - systemd: name=nginx enabled=true state=started
+- name: Install nginx_config_reloader
+  pip:
+    name: git+https://github.com/ByteInternet/nginx_config_reloader#egg=nginx_config_reloader
+    state: present
+- name: Create nginx_config_reloader service
+  template:
+    src: templates/nginx_config_reloader/nginx-config-reloader.service
+    dest: /usr/lib/systemd/system/nginx-config-reloader.service
+  notify:
+    - systemd
+- name: Run nginx-config-reloader service
+  systemd: name=nginx-config-reloader enabled=true state=started
 - name: Install Google Chrome
   dnf:
     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
