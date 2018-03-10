@@ -121,7 +121,7 @@
       notify:
         - php-fpm
     - name: Install php-fpm configuration
-      template: src=templates/php/local.www.conf.j2 dest=/etc/php-fpm.d/local.www.conf
+      template: src=templates/php/www.local.conf.j2 dest=/etc/php-fpm.d/www.local.conf
       notify:
         - php-fpm
     - name: Start php-fpm service
