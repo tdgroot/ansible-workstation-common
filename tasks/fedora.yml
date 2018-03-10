@@ -167,6 +167,12 @@
 - name: Install Spotify
   dnf: name=spotify state=present
   when: install_spotify
+- name: Install Wine
+  dnf: name={{ item }} state=present
+  with_items:
+    - wine
+    - winetricks
+  when: install_wine
 - name: Disable ipv6
   template: src=templates/sysctl/99-ipv6.conf dest=/etc/sysctl.d/99-ipv6.conf
   notify:
