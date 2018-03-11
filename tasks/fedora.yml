@@ -59,6 +59,11 @@
     - sysctl
   when: disable_ipv6
 
+- name: Set max_user_watches
+  template: src=templates/idea/idea.conf dest=/etc/sysctl.d/idea.conf
+  notify:
+    - sysctl
+
 - name: Install and configure mariadb
   block:
     - name: Install mariadb
