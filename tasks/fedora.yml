@@ -190,6 +190,19 @@
 - name: Run nginx-config-reloader service
   systemd: name=nginx-config-reloader enabled=true state=started
 
+- name: Install Docker repository
+  template: src=templates/docker/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
+  when: install_docker
+- name: Install Docker
+  dnf: name=docker-ce state=present
+  when: install_docker
+- name: Run docker service
+  systemd: name=docker enabled=true state=started
+  when: install_docker
+- name: Add primary user to docker group
+  user: name={{ primary_user }} groups=docker append=true
+  when: install_docker
+
 - name: Install Google Chrome
   dnf:
     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
