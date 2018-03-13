@@ -118,9 +118,11 @@
       with_items:
         - composer
         - php
+        - php-apcu
         - php-bcmath
         - php-fpm
         - php-gd
+        - php-imagick
         - php-intl
         - php-json
         - php-mbstring
