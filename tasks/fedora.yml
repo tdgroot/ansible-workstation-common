@@ -203,9 +203,14 @@
   user: name={{ primary_user }} groups=docker append=true
   when: install_docker
 
+- name: Install Google Chrome repository
+  copy:
+    src: files/google-chrome/google-chrome.repo
+    dest: /etc/yum.repos.d/google-chrome.repo
+  when: install_chrome
 - name: Install Google Chrome
   dnf:
-    name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    name: google-chrome
     state: present
   when: install_chrome
 - name: Install Chrome GNOME Shell integration
