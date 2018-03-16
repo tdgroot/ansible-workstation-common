@@ -44,7 +44,6 @@
   - sqlite
   - sqlite-devel
   - terminator
-  - vagrant
   - vim
   - vim-powerline
   - vlc
@@ -63,6 +62,14 @@
   template: src=templates/idea/idea.conf dest=/etc/sysctl.d/idea.conf
   notify:
     - sysctl
+
+- name: Install vagrant
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - vagrant
+  - vagrant-sshfs
 
 - name: Install and configure mariadb
   block:
