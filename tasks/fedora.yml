@@ -68,8 +68,9 @@
     name: "{{ item }}"
     state: present
   with_items:
-  - vagrant
-  - vagrant-sshfs
+    - vagrant
+    - vagrant-sshfs
+  when: install_vagrant
 
 - name: Install openjdk
   dnf:
