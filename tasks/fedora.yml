@@ -71,6 +71,15 @@
   - vagrant
   - vagrant-sshfs
 
+- name: Install openjdk
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - java
+    - java-1.8.0-openjdk-devel
+  when: install_openjdk
+
 - name: Install and configure mariadb
   block:
     - name: Install mariadb
