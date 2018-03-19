@@ -5,8 +5,6 @@ env:
   - distro: fedora27
     site: test.yml
     prefix: ''
-    primary_user: root
-    primary_group: root
 
 script:
   - export container_id=$(date +%s)

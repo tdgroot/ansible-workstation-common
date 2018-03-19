@@ -2,7 +2,8 @@
   - hosts: all
     vars:
       disable_selinux: false
-      primary_user: root
-      primary_group: root
+    pre_tasks:
+      - user:
+          name: timon
     roles:
       - role_under_test
