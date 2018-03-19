@@ -17,6 +17,6 @@ script:
 
 after_failure:
   # Check what happened on systemd systems.
-  - 'docker exec --tty ${container_id} env TERM=xterm journalctl -u php-fpm.service'
+  # - 'docker exec --tty ${container_id} env TERM=xterm journalctl -u php-fpm.service'
   - 'docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager -l status php-fpm.service'
   - 'docker exec --tty ${container_id} env TERM=xterm journalctl -xe --no-pager'
