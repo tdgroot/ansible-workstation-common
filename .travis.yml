@@ -1,0 +1,14 @@
+---
+services: docker
+
+env:
+  - distro: fedora27
+  - site: test.yml
+  - prefix: ''
+
+script:
+  - export container_id=$(date +%s)
+  - export cleanup=false
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
+  - chmod +x ${PWD}/tests/test.sh
+  - ${PWD}/tests/test.sh
