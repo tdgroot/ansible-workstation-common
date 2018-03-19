@@ -3,8 +3,8 @@ services: docker
 
 env:
   - distro: fedora27
-  - site: test.yml
-  - prefix: ''
+    site: test.yml
+    prefix: ''
 
 script:
   - export container_id=$(date +%s)
