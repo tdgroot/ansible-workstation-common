@@ -1,6 +1,7 @@
 ---
 # defaults file for common
 disable_ipv6: true
+disable_selinux: true
 primary_user: timon
 primary_group: timon
 php_fpm_port: 9071
