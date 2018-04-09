@@ -25,29 +25,29 @@
 - name: Install simple programs
   dnf: name={{ item }} state=present
   with_items:
-  - '@Development Tools'
-  - ansible
-  - bzr
-  - cloc
-  - filezilla
-  - gcc-c++
-  - gnome-terminal-nautilus
-  - gnome-tweak-tool
-  - htop
-  - libselinux-python
-  - mycli
-  - nano
-  - python2-mysql
-  - redhat-rpm-config
-  - ruby
-  - ruby-devel
-  - sqlite
-  - sqlite-devel
-  - terminator
-  - vim
-  - vim-powerline
-  - vlc
-  - zsh
+    - '@Development Tools'
+    - ansible
+    - bzr
+    - cloc
+    - filezilla
+    - gcc-c++
+    - gnome-terminal-nautilus
+    - gnome-tweak-tool
+    - htop
+    - libselinux-python
+    - mycli
+    - nano
+    - python2-mysql
+    - redhat-rpm-config
+    - ruby
+    - ruby-devel
+    - sqlite
+    - sqlite-devel
+    - terminator
+    - vim
+    - vim-powerline
+    - vlc
+    - zsh
 
 - name: Disable selinux
   selinux: state=disabled
@@ -298,6 +298,7 @@
     dest: "/home/{{ primary_user }}/.oh-my-zsh"
     clone: true
     update: true
+    version: master
   tags:
     - zsh
   become: true
