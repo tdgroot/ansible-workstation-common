@@ -9,13 +9,13 @@ platforms:
   - name: fedora27
     image: geerlingguy/docker-fedora27-ansible:latest
     command: /usr/lib/systemd/systemd
-    priviliged: True
+    priviliged: true
     volume_mounts:
       - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
   - name: fedora28
     image: tdgroot/fedora28-ansible:latest
     command: /usr/lib/systemd/systemd
-    priviliged: True
+    priviliged: true
     volume_mounts:
       - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
 provisioner:
