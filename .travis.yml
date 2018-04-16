@@ -2,17 +2,11 @@
 sudo: required
 language: python
 services: docker
-
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
 install:
   - pip install molecule
   - pip install docker
-
 script:
   - molecule --debug test
-
-after_failure:
-  # Check what happened on systemd systems.
-  - 'docker exec --tty fedora27 env TERM=xterm systemctl --no-pager -l status php-fpm.service'
-  - 'docker exec --tty fedora28 env TERM=xterm systemctl --no-pager -l status php-fpm.service'
-  - 'docker exec --tty fedora27 env TERM=xterm journalctl -xe --no-pager'
-  - 'docker exec --tty fedora28 env TERM=xterm journalctl -xe --no-pager'
