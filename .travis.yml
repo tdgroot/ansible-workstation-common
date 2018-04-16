@@ -3,15 +3,12 @@ sudo: required
 language: python
 services: docker
 
-env:
-  - MOLECULE_DEBUG=1
-
 install:
   - pip install molecule
   - pip install docker
 
 script:
-  - molecule test
+  - molecule --debug test
 
 after_failure:
   # Check what happened on systemd systems.
