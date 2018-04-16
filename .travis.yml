@@ -11,10 +11,6 @@ before_install:
 install:
   - pip install molecule
   - pip install docker
-  - docker pull geerlingguy/docker-fedora27-ansible:latest
-  - docker pull tdgroot/fedora28-ansible:latest
-  - molecule create
-  - molecule destroy
 script:
   - molecule --debug test
 after_failure:
