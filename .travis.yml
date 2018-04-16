@@ -13,5 +13,7 @@ install:
   - pip install docker
   - molecule create
   - molecule destroy
+  - docker pull geerlingguy/docker-fedora27-ansible:latest
+  - docker pull tdgroot/fedora28-ansible:latest
 script:
   - molecule --debug test
