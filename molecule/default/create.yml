@@ -38,7 +38,6 @@
         force: "{{ item.item.force | default(true) }}"
       with_items: "{{ platforms.results }}"
       when: platforms.changed or docker_images.results | map(attribute='images') | select('equalto', []) | list | count >= 0
-      no_log: false
 
     - name: Create docker network(s)
       docker_network:

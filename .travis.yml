@@ -3,6 +3,9 @@ sudo: required
 language: python
 services: docker
 
+env:
+  - MOLECULE_DEBUG=1
+
 install:
   - pip install molecule
   - pip install docker
