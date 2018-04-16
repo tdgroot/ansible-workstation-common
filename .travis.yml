@@ -17,3 +17,6 @@ install:
   - molecule destroy
 script:
   - molecule --debug test
+after_failure:
+  - ls -l /tmp
+  - tree /tmp/molecule
