@@ -1,10 +1,5 @@
 ---
 # tasks file for common/fedora
-- name: Check systemd
-  systemd:
-    name: firewalld
-    state: started
-
 - name: Install RPM Fusion (free)
   dnf:
     name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
