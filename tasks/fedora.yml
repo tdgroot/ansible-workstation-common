@@ -281,14 +281,9 @@
   dnf: name=spotify state=present
   when: install_spotify
 
-- name: Check if Virtualbox could be installed
-  command: "dnf search VirtualBox"
-  register: dnf_search_virtualbox
-  changed_when: false
-  when: install_virtualbox
 - name: Install Virtualbox
   dnf: name=VirtualBox state=present
-  when: install_virtualbox and dnf_search_virtualbox.stdout_lines|length > 2
+  when: install_virtualbox
 
 - name: Install Wine
   dnf: name={{ item }} state=present
