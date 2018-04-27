@@ -216,7 +216,7 @@
   template: src=templates/docker/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
   when: install_docker
 - name: Check if docker should be installed
-  shell: "dnf search docker-ce"
+  command: "dnf search docker-ce"
   register: dnf_search_docker
   changed_when: false
   when: install_docker
