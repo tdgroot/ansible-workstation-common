@@ -8,7 +8,11 @@ cache:
 before_install:
   - sudo apt-get -qq update
 install:
+  - virtualenv --no-site-packages .venv
+  - source .venv/bin/activate
+  - pip install ansible==2.5.0
   - pip install molecule
   - pip install docker
 script:
+  - source .venv/bin/activate
   - molecule test
