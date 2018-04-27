@@ -111,7 +111,10 @@
       systemd: name=redis enabled=true state=started
 
 - name: Install mailcatcher
-  gem: name=mailcatcher state=present
+  gem:
+    name: mailcatcher
+    state: present
+    user_install: false
 - name: Create mailcatcher service
   template: src=templates/mailcatcher/mailcatcher.service.j2 dest=/usr/lib/systemd/system/mailcatcher.service
   notify:
