@@ -1,20 +1,18 @@
 ---
-services: docker
-
-env:
-  - distro: fedora27
-    site: test.yml
-    prefix: ''
-
+sudo: required
+language: python
+services:
+  - docker
+cache:
+  - pip
+before_install:
+  - sudo apt-get -qq update
+install:
+  - virtualenv --no-site-packages .venv
+  - source .venv/bin/activate
+  - pip install ansible==2.5.0
+  - pip install molecule
+  - pip install docker
 script:
-  - export container_id=$(date +%s)
-  - export cleanup=false
-  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/geerlingguy/73ef1e5ee45d8694570f334be385e181/raw/
-  - chmod +x ${PWD}/tests/test.sh
-  - ${PWD}/tests/test.sh
-
-after_failure:
-  # Check what happened on systemd systems.
-  # - 'docker exec --tty ${container_id} env TERM=xterm journalctl -u php-fpm.service'
-  - 'docker exec --tty ${container_id} env TERM=xterm systemctl --no-pager -l status php-fpm.service'
-  - 'docker exec --tty ${container_id} env TERM=xterm journalctl -xe --no-pager'
+  - source .venv/bin/activate
+  - molecule test

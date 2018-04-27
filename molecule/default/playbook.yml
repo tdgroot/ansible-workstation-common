@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    disable_selinux: false
+  roles:
+    - role: ansible-workstation-common

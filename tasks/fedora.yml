@@ -38,6 +38,7 @@
     - mycli
     - nano
     - python2-mysql
+    - python-docker
     - redhat-rpm-config
     - ruby
     - ruby-devel
@@ -110,7 +111,10 @@
       systemd: name=redis enabled=true state=started
 
 - name: Install mailcatcher
-  gem: name=mailcatcher state=present
+  gem:
+    name: mailcatcher
+    state: present
+    user_install: false
 - name: Create mailcatcher service
   template: src=templates/mailcatcher/mailcatcher.service.j2 dest=/usr/lib/systemd/system/mailcatcher.service
   notify:
@@ -211,15 +215,20 @@
 - name: Install Docker repository
   template: src=templates/docker/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
   when: install_docker
+- name: Check if docker could be installed
+  command: "dnf search docker-ce"
+  register: dnf_search_docker
+  changed_when: false
+  when: install_docker
 - name: Install Docker
   dnf: name=docker-ce state=present
-  when: install_docker
+  when: install_docker and dnf_search_docker.stdout_lines|length > 2
 - name: Run docker service
   systemd: name=docker enabled=true state=started
-  when: install_docker
+  when: install_docker and dnf_search_docker.stdout_lines|length > 2
 - name: Add primary user to docker group
   user: name={{ primary_user }} groups=docker append=true
-  when: install_docker
+  when: install_docker and dnf_search_docker.stdout_lines|length > 2
 
 - name: Install Google Chrome repository
   copy:
