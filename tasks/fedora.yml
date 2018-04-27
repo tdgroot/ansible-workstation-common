@@ -215,15 +215,20 @@
 - name: Install Docker repository
   template: src=templates/docker/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
   when: install_docker
+- name: Check if docker should be installed
+  shell: "dnf search docker-ce"
+  register: dnf_search_docker
+  changed_when: false
+  when: install_docker
 - name: Install Docker
   dnf: name=docker-ce state=present
-  when: install_docker
+  when: install_docker and dnf_search_docker.stdout_lines|length > 2
 - name: Run docker service
   systemd: name=docker enabled=true state=started
-  when: install_docker
+  when: install_docker and dnf_search_docker.stdout_lines|length > 2
 - name: Add primary user to docker group
   user: name={{ primary_user }} groups=docker append=true
-  when: install_docker
+  when: install_docker and dnf_search_docker.stdout_lines|length > 2
 
 - name: Install Google Chrome repository
   copy:
