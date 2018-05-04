@@ -70,12 +70,8 @@ Running Tests
 -------------
 
 ``` shell
-docker run --rm -it \
-    -v $(pwd):/tmp/$(basename "${PWD}"):ro \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -w /tmp/$(basename "${PWD}") \
-    retr0h/molecule:latest \
-    sudo molecule test
+pip install -r install.txt
+molecule test
 ```
 
 Example Playbook
