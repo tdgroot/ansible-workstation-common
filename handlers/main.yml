@@ -10,3 +10,9 @@
   command: sysctl -p --system
 - name: nginx-config-reloader
   systemd: name=nginx-config-reloader state=restarted
+- name: php70
+  systemd: name=php70-php-fpm state=restarted
+- name: php71
+  systemd: name=php71-php-fpm state=restarted
+- name: php72
+  systemd: name=php72-php-fpm state=restarted

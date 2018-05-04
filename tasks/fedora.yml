@@ -133,6 +133,9 @@
   dnf:
     name: http://rpms.remirepo.net/fedora/remi-release-{{ ansible_distribution_version }}.rpm
     state: present
+- name: Enable Remi's RPM repository
+  command: "dnf config-manager --set-enabled remi"
+  changed_when: false
 - name: Install and configure php
   block:
     - name: Install php
@@ -168,6 +171,31 @@
         - php-fpm
     - name: Start php-fpm service
       systemd: name=php-fpm enabled=true state=started
+
+- name: Install php70
+  dnf:
+    name: "{{ item }}"
+    state: present
+    enablerepo: remi
+  with_items:
+    - php70-php
+    - php70-php-apcu
+    - php70-php-bcmath
+    - php70-php-fpm
+    - php70-php-gd
+    - php70-php-imagick
+    - php70-php-intl
+    - php70-php-json
+    - php70-php-mbstring
+    - php70-php-mcrypt
+    - php70-php-mysqlnd
+    - php70-php-opcache
+    - php70-php-pdo
+    - php70-php-soap
+    - php70-php-xdebug
+    - php70-php-xml
+    - php70-php-zip
+  tags: php
 
 - name: Install and configure nginx
   block:
