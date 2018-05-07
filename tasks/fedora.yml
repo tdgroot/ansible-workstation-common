@@ -122,52 +122,9 @@
 - name: Run mailcatcher service
   systemd: name=mailcatcher enabled=true state=started
 
-# Remi's RPM repository
-# https://rpms.remirepo.net
-#
-# Command to install:
-#    dnf --enablerepo=remi install php70
-# Command to install additional packages:
-#    dnf --enablerepo=remi install php70-php-xxx
-- name: Install Remi's RPM repository
-  dnf:
-    name: http://rpms.remirepo.net/fedora/remi-release-{{ ansible_distribution_version }}.rpm
-    state: present
-- name: Install and configure php
-  block:
-    - name: Install php
-      dnf: name={{ item }} state=present
-      with_items:
-        - composer
-        - php
-        - php-apcu
-        - php-bcmath
-        - php-fpm
-        - php-gd
-        - php-imagick
-        - php-intl
-        - php-json
-        - php-mbstring
-        - php-mcrypt
-        - php-mysqlnd
-        - php-opcache
-        - php-pdo
-        - php-soap
-        - php-xdebug
-        - php-xml
-        - php-zip
-      notify:
-        - php-fpm
-    - name: Install php configuration
-      template: src=templates/php/99-local.ini.j2 dest=/etc/php.d/99-local.ini
-      notify:
-        - php-fpm
-    - name: Install php-fpm configuration
-      template: src=templates/php/www.local.conf.j2 dest=/etc/php-fpm.d/www.local.conf
-      notify:
-        - php-fpm
-    - name: Start php-fpm service
-      systemd: name=php-fpm enabled=true state=started
+- name: Install php
+  include_tasks: fedora/php.yml
+  tags: php
 
 - name: Install and configure nginx
   block:
