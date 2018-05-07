@@ -119,6 +119,7 @@
   template: src=templates/mailcatcher/mailcatcher.service.j2 dest=/usr/lib/systemd/system/mailcatcher.service
   notify:
     - systemd
+    - mailcatcher
 - name: Run mailcatcher service
   systemd: name=mailcatcher enabled=true state=started
 

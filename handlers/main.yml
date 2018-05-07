@@ -16,3 +16,5 @@
   systemd: name=php71-php-fpm state=restarted
 - name: php72
   systemd: name=php72-php-fpm state=restarted
+- name: mailcatcher
+  systemd: name=mailcatcher state=restarted
