@@ -1,3 +1,4 @@
+/molecule/default/tests/__pycache__
 /*.retry
 /inventory.yml
 /dev.yml
