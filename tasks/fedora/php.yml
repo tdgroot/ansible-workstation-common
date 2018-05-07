@@ -1,0 +1,164 @@
+---
+# Remi's RPM repository
+# https://rpms.remirepo.net
+#
+# Command to install:
+#    dnf --enablerepo=remi install php70
+# Command to install additional packages:
+#    dnf --enablerepo=remi install php70-php-xxx
+- name: Install Remi's RPM repository
+  dnf:
+    name: http://rpms.remirepo.net/fedora/remi-release-{{ ansible_distribution_version }}.rpm
+    state: present
+- name: Enable Remi's RPM repository
+  command: "dnf config-manager --set-enabled remi"
+  changed_when: false
+# - name: Install and configure php
+#   block:
+#     - name: Install php
+#       dnf: name={{ item }} state=present
+#       with_items:
+#         - composer
+#         - php
+#         - php-apcu
+#         - php-bcmath
+#         - php-fpm
+#         - php-gd
+#         - php-imagick
+#         - php-intl
+#         - php-json
+#         - php-mbstring
+#         - php-mcrypt
+#         - php-mysqlnd
+#         - php-opcache
+#         - php-pdo
+#         - php-soap
+#         - php-xdebug
+#         - php-xml
+#         - php-zip
+#       notify:
+#         - php-fpm
+#     - name: Install php configuration
+#       template: src=templates/php/99-local.ini.j2 dest=/etc/php.d/99-local.ini
+#       notify:
+#         - php-fpm
+#     - name: Install php-fpm configuration
+#       template: src=templates/php/www.local.conf.j2 dest=/etc/php-fpm.d/www.local.conf
+#       notify:
+#         - php-fpm
+#     - name: Start php-fpm service
+#       systemd: name=php-fpm enabled=true state=started
+
+- name: Install php70
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - php70-php
+    - php70-php-apcu
+    - php70-php-bcmath
+    - php70-php-fpm
+    - php70-php-gd
+    - php70-php-imagick
+    - php70-php-intl
+    - php70-php-json
+    - php70-php-mbstring
+    - php70-php-mcrypt
+    - php70-php-mysqlnd
+    - php70-php-opcache
+    - php70-php-pdo
+    - php70-php-soap
+    - php70-php-xdebug
+    - php70-php-xml
+    - php70-php-zip
+  notify: php70
+  tags: php
+- name: Install php70 configuration
+  template: src=templates/php/99-local.ini.j2 dest=/etc/opt/remi/php70/php.d/99-local.ini
+  notify: php70
+  tags: php
+- name: Install php70-php-fpm configuration
+  vars:
+    - php_fpm_port: 9070
+  template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php70/php-fpm.d/www.local.conf
+  notify: php70
+  tags: php
+- name: Start php70-php-fpm service
+  systemd: name=php70-php-fpm enabled=true state=started
+  tags: php
+
+- name: Install php71
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - php71-php
+    - php71-php-apcu
+    - php71-php-bcmath
+    - php71-php-fpm
+    - php71-php-gd
+    - php71-php-imagick
+    - php71-php-intl
+    - php71-php-json
+    - php71-php-mbstring
+    - php71-php-mcrypt
+    - php71-php-mysqlnd
+    - php71-php-opcache
+    - php71-php-pdo
+    - php71-php-soap
+    - php71-php-xdebug
+    - php71-php-xml
+    - php71-php-zip
+  notify: php71
+  tags: php
+- name: Install php71 configuration
+  template: src=templates/php/99-local.ini.j2 dest=/etc/opt/remi/php71/php.d/99-local.ini
+  notify: php71
+  tags: php
+- name: Install php71-php-fpm configuration
+  vars:
+    - php_fpm_port: 9071
+  template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php71/php-fpm.d/www.local.conf
+  notify: php71
+  tags: php
+- name: Start php71-php-fpm service
+  systemd: name=php71-php-fpm enabled=true state=started
+  tags: php
+
+- name: Install php72
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - php72-php
+    - php72-php-apcu
+    - php72-php-bcmath
+    - php72-php-fpm
+    - php72-php-gd
+    - php72-php-imagick
+    - php72-php-intl
+    - php72-php-json
+    - php72-php-mbstring
+    - php72-php-mcrypt
+    - php72-php-mysqlnd
+    - php72-php-opcache
+    - php72-php-pdo
+    - php72-php-soap
+    - php72-php-xdebug
+    - php72-php-xml
+    - php72-php-zip
+  notify: php72
+  tags: php
+- name: Install php72 configuration
+  template: src=templates/php/99-local.ini.j2 dest=/etc/opt/remi/php72/php.d/99-local.ini
+  notify: php72
+  tags: php
+- name: Install php72-php-fpm configuration
+  vars:
+    - php_fpm_port: 9072
+  template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php72/php-fpm.d/www.local.conf
+  notify: php72
+  tags: php
+- name: Start php72-php-fpm service
+  systemd: name=php72-php-fpm enabled=true state=started
+  tags: php
