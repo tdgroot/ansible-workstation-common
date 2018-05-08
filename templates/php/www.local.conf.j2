@@ -9,3 +9,4 @@ listen.acl_users = nginx
 listen.allowed_clients = 127.0.0.1
 
 php_admin_value[sendmail_path] = /usr/local/bin/catchmail -f me@localhost
+php_value[session.save_path] = {{ php_session_directory }}

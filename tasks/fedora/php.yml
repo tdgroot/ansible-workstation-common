@@ -13,42 +13,12 @@
 - name: Enable Remi's RPM repository
   command: "dnf config-manager --set-enabled remi"
   changed_when: false
-# - name: Install and configure php
-#   block:
-#     - name: Install php
-#       dnf: name={{ item }} state=present
-#       with_items:
-#         - composer
-#         - php
-#         - php-apcu
-#         - php-bcmath
-#         - php-fpm
-#         - php-gd
-#         - php-imagick
-#         - php-intl
-#         - php-json
-#         - php-mbstring
-#         - php-mcrypt
-#         - php-mysqlnd
-#         - php-opcache
-#         - php-pdo
-#         - php-soap
-#         - php-xdebug
-#         - php-xml
-#         - php-zip
-#       notify:
-#         - php-fpm
-#     - name: Install php configuration
-#       template: src=templates/php/99-local.ini.j2 dest=/etc/php.d/99-local.ini
-#       notify:
-#         - php-fpm
-#     - name: Install php-fpm configuration
-#       template: src=templates/php/www.local.conf.j2 dest=/etc/php-fpm.d/www.local.conf
-#       notify:
-#         - php-fpm
-#     - name: Start php-fpm service
-#       systemd: name=php-fpm enabled=true state=started
-
+- name: Create php session directory
+  file:
+    path: "{{ php_session_directory }}"
+    state: directory
+    owner: "{{ primary_user }}"
+    group: "{{ primary_group }}"
 - name: Install php70
   dnf:
     name: "{{ item }}"
@@ -83,6 +53,13 @@
   template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php70/php-fpm.d/www.local.conf
   notify: php70
   tags: php
+- name: Disable default php70 session.save_path
+  lineinfile:
+    path: /etc/opt/remi/php70/php-fpm.d/www.conf
+    regexp: '^(php_value\[session\.save_path\].*)'
+    backrefs: true
+    line: '; \1'
+  notify: php70
 - name: Start php70-php-fpm service
   systemd: name=php70-php-fpm enabled=true state=started
   tags: php
@@ -121,6 +98,13 @@
   template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php71/php-fpm.d/www.local.conf
   notify: php71
   tags: php
+- name: Disable default php71 session.save_path
+  lineinfile:
+    path: /etc/opt/remi/php71/php-fpm.d/www.conf
+    regexp: '^(php_value\[session\.save_path\].*)'
+    backrefs: true
+    line: '; \1'
+  notify: php71
 - name: Start php71-php-fpm service
   systemd: name=php71-php-fpm enabled=true state=started
   tags: php
@@ -159,6 +143,13 @@
   template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php72/php-fpm.d/www.local.conf
   notify: php72
   tags: php
+- name: Disable default php72 session.save_path
+  lineinfile:
+    path: /etc/opt/remi/php72/php-fpm.d/www.conf
+    regexp: '^(php_value\[session\.save_path\].*)'
+    backrefs: true
+    line: '; \1'
+  notify: php72
 - name: Start php72-php-fpm service
   systemd: name=php72-php-fpm enabled=true state=started
   tags: php

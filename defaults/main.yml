@@ -4,7 +4,9 @@ disable_ipv6: true
 disable_selinux: true
 primary_user: timon
 primary_group: timon
+primary_homedir: "/home/{{ primary_user }}"
 php_fpm_port: 9071
+php_session_directory: "{{ primary_homedir}}/.php-session"
 install_atom: true
 install_chrome: true
 install_docker: true
