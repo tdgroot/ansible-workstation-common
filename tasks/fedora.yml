@@ -127,48 +127,9 @@
   include_tasks: fedora/php.yml
   tags: php
 
-- name: Install and configure nginx
-  block:
-    - name: Install nginx
-      dnf: name=nginx state=present
-      notify:
-        - nginx
-    - name: Install nginx/nginx.conf
-      template: src=templates/nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf
-      notify:
-        - nginx
-    - name: Install nginx/default.conf
-      template: src=templates/nginx/default.conf.j2 dest=/etc/nginx/default.conf
-      notify:
-        - nginx
-    - name: Install nginx/magento2.conf
-      template: src=templates/nginx/magento2.conf.j2 dest=/etc/nginx/magento2.conf
-      notify:
-        - nginx
-    - name: Install nginx/conf.d/php-fpm.conf
-      template: src=templates/nginx/php-fpm.conf.j2 dest=/etc/nginx/conf.d/php-fpm.conf
-      notify:
-        - nginx
-    - name: Install nginx/conf.d/mailcatcher.conf
-      template: src=templates/nginx/mailcatcher.conf.j2 dest=/etc/nginx/conf.d/mailcatcher.conf
-      notify:
-        - nginx
-    - name: Start nginx service
-      systemd: name=nginx enabled=true state=started
-
-- name: Install nginx_config_reloader
-  pip:
-    name: git+https://github.com/ByteInternet/nginx_config_reloader#egg=nginx_config_reloader
-    state: present
-- name: Create nginx_config_reloader service
-  template:
-    src: templates/nginx_config_reloader/nginx-config-reloader.service
-    dest: /usr/lib/systemd/system/nginx-config-reloader.service
-  notify:
-    - systemd
-    - nginx-config-reloader
-- name: Run nginx-config-reloader service
-  systemd: name=nginx-config-reloader enabled=true state=started
+- name: Install nginx
+  include_tasks: fedora/nginx.yml
+  tags: nginx
 
 - name: Install Docker repository
   template: src=templates/docker/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
