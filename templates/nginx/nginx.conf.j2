@@ -22,7 +22,9 @@ http {
     tcp_nodelay         on;
     keepalive_timeout   65;
     types_hash_max_size 2048;
-    
+
+    client_body_temp_path {{ nginx_temp_directory }} 1 2;
+
     fastcgi_buffers 16 16k;
     fastcgi_buffer_size 32k;
 
