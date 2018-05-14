@@ -13,9 +13,11 @@ def test_hosts_file(host):
     assert f.user == 'root'
     assert f.group == 'root'
 
+
 def test_nginx_is_installed:
     nginx = host.package('nginx')
     assert nginx.is_installed
+
 
 def test_nginx_has_optimale_types_hash:
     output = host.run('nginx -t').stdout
