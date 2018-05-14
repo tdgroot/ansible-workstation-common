@@ -8,6 +8,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 # Documentation:
 # - https://testinfra.readthedocs.io/en/latest/modules.html#host
 
+
 def test_hosts_file(host):
     f = host.file('/etc/hosts')
 
