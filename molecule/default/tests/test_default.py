@@ -22,6 +22,7 @@ def test_nginx_is_installed(host):
     assert nginx.is_installed
 
 
-def test_nginx_has_optimal_types_hash(host):
+def test_nginx_config_test_is_positive(host):
     nginx = host.run('nginx -t')
-    assert '[warn] could not build optimal types_hash' not in nginx.stderr
+    assert nginx.rc == 0
+    assert nginx.stderr is ''
