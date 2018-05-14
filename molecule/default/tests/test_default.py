@@ -25,4 +25,5 @@ def test_nginx_is_installed(host):
 def test_nginx_config_test_is_positive(host):
     nginx = host.run('nginx -t')
     assert nginx.rc == 0
-    assert nginx.stderr is ''
+    assert '[warn]' not in nginx.stderr
+    assert '[error]' not in nginx.stderr
