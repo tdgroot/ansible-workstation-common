@@ -8,6 +8,10 @@ Workstation Common
 
 Common tasks for installing and configuring Fedora Workstation and MacOS.
 
+This project is tested and running on:
+- Fedora Workstation 27
+- Fedora Workstation 28
+
 Requirements
 ------------
 
