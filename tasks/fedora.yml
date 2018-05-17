@@ -156,7 +156,7 @@
   when: install_chrome
 - name: Install Google Chrome
   dnf:
-    name: google-chrome
+    name: google-chrome-stable
     state: present
   when: install_chrome
 - name: Install Chrome GNOME Shell integration
