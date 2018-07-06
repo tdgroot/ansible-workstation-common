@@ -80,7 +80,7 @@
     state: present
   with_items:
     - java
-    - java-1.8.0-openjdk-devel
+    - java-devel
   when: install_openjdk
 
 - name: Install and configure mariadb
