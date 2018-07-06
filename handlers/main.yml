@@ -4,6 +4,8 @@
   systemd: name=php-fpm state=restarted
 - name: nginx
   systemd: name=nginx state=restarted
+- name: mariadb
+  systemd: name=nginx state=restarted
 - name: systemd
   systemd: daemon_reload=true
 - name: sysctl
