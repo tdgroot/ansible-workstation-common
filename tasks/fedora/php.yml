@@ -41,6 +41,7 @@
     - php70-php-xdebug
     - php70-php-xml
     - php70-php-zip
+    - php70-php-redis
   notify: php70
   tags: php
 - name: Install php70 configuration
@@ -86,6 +87,7 @@
     - php71-php-xdebug
     - php71-php-xml
     - php71-php-zip
+    - php71-php-redis
   notify: php71
   tags: php
 - name: Install php71 configuration
@@ -131,6 +133,7 @@
     - php72-php-xdebug
     - php72-php-xml
     - php72-php-zip
+    - php72-php-redis
   notify: php72
   tags: php
 - name: Install php72 configuration
