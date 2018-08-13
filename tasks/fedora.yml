@@ -42,6 +42,7 @@
     - redhat-rpm-config
     - ruby
     - ruby-devel
+    - snapd
     - sqlite
     - sqlite-devel
     - terminator
