@@ -23,10 +23,28 @@
     dest: /etc/nginx/default.conf
   notify: nginx
   tags: nginx
+- name: Install nginx/magento.conf
+  template:
+    src: templates/nginx/magento.conf.j2
+    dest: /etc/nginx/magento.conf
+  notify: nginx
+  tags: nginx
 - name: Install nginx/magento2.conf
   template:
     src: templates/nginx/magento2.conf.j2
     dest: /etc/nginx/magento2.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/wordpress.conf
+  template:
+    src: templates/nginx/wordpress.conf.j2
+    dest: /etc/nginx/wordpress.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/wordpress-multisite.conf
+  template:
+    src: templates/nginx/wordpress-multisite.conf.j2
+    dest: /etc/nginx/wordpress-multisite.conf
   notify: nginx
   tags: nginx
 - name: Install nginx/conf.d/php-fpm.conf
