@@ -1,0 +1,9 @@
+if (!-e $request_filename) {
+    rewrite ^(/[^/]+)?/wp-admin$ $scheme://$http_host$uri/ permanent;
+    rewrite ^/(wp-.*) /wp/$1 last;
+    # rewrite ^/(.*\.php)$ /wp/$1 last;
+
+    # Multisite requests
+    rewrite ^/([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*)$ /wp/$2;
+    rewrite ^/([_0-9a-zA-Z-]+/)?(.*\.php)$ /wp/$2;
+}
