@@ -22,3 +22,4 @@ install_virtualbox: false
 install_wine: true
 mysql_root_password: mysql
 mysql_old_root_password: ''
+system_is_macmini: false
