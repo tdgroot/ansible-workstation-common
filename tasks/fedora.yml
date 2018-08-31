@@ -1,7 +1,7 @@
 ---
 # tasks file for common/fedora
 - name: Get system product name
-  shell: "dmidecode --type system | grep 'Product Name' | sed 's/\tProduct Name: //'"
+  shell: "dmidecode -s system-product-name"
   changed_when: false
   register: system_product_name
 
