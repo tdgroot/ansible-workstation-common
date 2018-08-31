@@ -2,11 +2,11 @@
 # tasks file for common/fedora
 - name: Get system product name
   shell: "dmidecode --type system | grep 'Product Name' | sed 's/\tProduct Name: //'"
+  changed_when: false
   register: system_product_name
 
 - set_fact:
     system_is_macmini: true
-  changed_when: false
   when: system_product_name|lower is search("macmini")
 
 - name: Install RPM Fusion (free)
