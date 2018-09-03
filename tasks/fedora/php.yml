@@ -156,3 +156,9 @@
 - name: Start php72-php-fpm service
   systemd: name=php72-php-fpm enabled=true state=started
   tags: php
+
+- name: Install composer
+  dnf:
+    name: composer
+    state: present
+  tags: php
