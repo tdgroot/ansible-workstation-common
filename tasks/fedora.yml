@@ -131,6 +131,11 @@
   include_tasks: fedora/nginx.yml
   tags: nginx
 
+- name: Install awscli
+  include_tasks: fedora/aws.yml
+  when: install_aws
+  tags: aws awscli
+
 - name: Install Docker repository
   template: src=templates/docker/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
   when: install_docker

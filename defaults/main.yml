@@ -9,6 +9,7 @@ php_fpm_port: 9071
 php_session_directory: "{{ primary_homedir}}/.php-session"
 nginx_temp_directory: "{{ primary_homedir }}/.nginx-tmp"
 install_atom: true
+install_aws: true
 install_chrome: true
 install_docker: true
 install_openjdk: true
