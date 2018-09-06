@@ -1,14 +1,5 @@
 ---
 # tasks file for common/fedora
-- name: Get system product name
-  shell: "dmidecode -s system-product-name"
-  changed_when: false
-  register: system_product_name
-
-- set_fact:
-    system_is_macmini: true
-  when: system_product_name|lower is search("macmini")
-
 - name: Install RPM Fusion (free)
   dnf:
     name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
@@ -38,6 +29,7 @@
     - ansible
     - bzr
     - cloc
+    - dmidecode
     - filezilla
     - gcc-c++
     - gnome-terminal-nautilus
@@ -59,6 +51,15 @@
     - vim-powerline
     - vlc
     - zsh
+
+- name: Get system product name
+  shell: "dmidecode -s system-product-name"
+  changed_when: false
+  register: system_product_name
+
+- set_fact:
+    system_is_macmini: true
+  when: system_product_name|lower is search("macmini")
 
 - name: Create snap symlink
   file:
