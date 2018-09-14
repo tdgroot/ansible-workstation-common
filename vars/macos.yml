@@ -1,0 +1,4 @@
+---
+primary_homedir: "/Users/{{ primary_user }}"
+nginx_root_directory: /usr/local/etc/nginx
+homebrew_executable: /usr/local/bin/brew

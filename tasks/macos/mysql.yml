@@ -1,0 +1,29 @@
+---
+- name: Install mariadb
+  homebrew:
+    name: mariadb
+    state: present
+  tags: mariadb mysql
+
+- name: Start mariadb service
+  shell: "{{ homebrew_executable }} services start mariadb"
+  register: brew_service_result
+  changed_when: "'Successfully started `mariadb`' in brew_service_result.stdout"
+  tags: mariadb mysql
+
+- name: Set mariadb root password
+  mysql_user:
+    name: root
+    password: "{{ mysql_root_password }}"
+    login_password: "{{ mysql_old_root_password }}"
+  when: mysql_root_password != mysql_old_root_password
+  ignore_errors: true
+  tags: mariadb mysql
+
+- name: Create ~/.my.cnf
+  template:
+    src: templates/mariadb/.my.cnf.j2
+    dest: "/Users/{{ primary_user }}/.my.cnf"
+    owner: "{{ primary_user }}"
+    group: "{{ primary_group }}"
+  tags: mariadb mysql

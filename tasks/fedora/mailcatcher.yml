@@ -1,0 +1,18 @@
+---
+- name: Install mailcatcher
+  gem:
+    name: mailcatcher
+    state: present
+    user_install: false
+  tags: mailcatcher
+
+- name: Create mailcatcher service
+  template: src=templates/mailcatcher/mailcatcher.service.j2 dest=/usr/lib/systemd/system/mailcatcher.service
+  notify:
+    - systemd
+    - mailcatcher
+  tags: mailcatcher
+
+- name: Run mailcatcher service
+  systemd: name=mailcatcher enabled=true state=started
+  tags: mailcatcher

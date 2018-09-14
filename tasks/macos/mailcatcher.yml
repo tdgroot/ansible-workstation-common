@@ -1,0 +1,22 @@
+---
+- name: Install mailcatcher
+  gem:
+    name: mailcatcher
+    state: present
+    user_install: false
+  become: true
+  tags: mailcatcher
+
+- name: Create mailcatcher LaunchAgent
+  template:
+    src: "templates/mailcatcher/me.mailcatcher.plist.j2"
+    dest: "{{ primary_homedir }}/Library/LaunchAgents/me.mailcatcher.plist"
+  notify:
+    - mailcatcher
+  tags: mailcatcher
+
+- name: Start mailcatcher service
+  shell: "launchctl load {{ primary_homedir }}/Library/LaunchAgents/me.mailcatcher.plist"
+  register: launchctl_result
+  changed_when: "'service already loaded' not in launchctl_result.stderr"
+  tags: mailcatcher

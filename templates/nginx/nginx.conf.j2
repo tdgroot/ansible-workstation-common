@@ -1,3 +1,5 @@
+{% if ansible_distribution == "Fedora" %}
+
 user {{ primary_user }};
 worker_processes auto;
 error_log /var/log/nginx/error.log;
@@ -5,6 +7,8 @@ pid /run/nginx.pid;
 
 # Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
 include /usr/share/nginx/modules/*.conf;
+
+{% endif %}
 
 events {
     worker_connections 1024;
@@ -15,7 +19,9 @@ http {
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
 
+{% if ansible_distribution == "Fedora" %}
     access_log  /var/log/nginx/access.log  main;
+{% endif %}
 
     sendfile            on;
     tcp_nopush          on;
@@ -23,17 +29,19 @@ http {
     keepalive_timeout   65;
     types_hash_max_size 4096;
 
+{% if ansible_distribution == "Fedora" %}
     client_body_temp_path {{ nginx_temp_directory }} 1 2;
+{% endif %}
 
     fastcgi_buffers 16 16k;
     fastcgi_buffer_size 32k;
 
-    include             /etc/nginx/mime.types;
+    include             mime.types;
     default_type        application/octet-stream;
 
     # Load modular configuration files from the /etc/nginx/conf.d directory.
-    include /etc/nginx/conf.d/*.conf;
+    include {{ nginx_root_directory }}/conf.d/*.conf;
 
     # Load user files
-    include /home/{{ primary_user }}/nginx/*.conf;
+    include {{ primary_homedir }}/nginx/*.conf;
 }

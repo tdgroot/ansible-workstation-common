@@ -1,0 +1,29 @@
+---
+- name: Clone oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: "{{ primary_homedir }}/.oh-my-zsh"
+    clone: true
+    update: true
+    version: master
+  tags: zsh
+
+- name: Register .zshrc existence
+  stat:
+    path: "{{ primary_homedir }}/.zshrc"
+  register: zshrc_file
+  tags: zsh
+
+- name: Copy .zshrc
+  copy:
+    src: "{{ primary_homedir }}/.oh-my-zsh/templates/zshrc.zsh-template"
+    dest: "{{ primary_homedir }}/.zshrc"
+    remote_src: true
+  when: not zshrc_file.stat.exists
+  tags: zsh
+
+- name: Init shell
+  user:
+    name: "{{ primary_user }}"
+    shell: /bin/zsh
+  tags: zsh

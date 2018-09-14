@@ -3,3 +3,5 @@
 /.venv
 /inventory.yml
 /dev.yml
+/hosts
+/playbook.yml

@@ -1,0 +1,53 @@
+---
+- name: Create php session directory
+  file:
+    path: "{{ php_session_directory }}"
+    state: directory
+
+- name: Install php 7.0
+  homebrew:
+    name: php@7.0
+    state: present
+  tags: php
+- name: Install php70 ini configuration
+  template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.0/conf.d/99-local.ini
+  notify: php70
+  tags: php
+- name: Install php70 fpm configuration
+  vars:
+    - php_fpm_port: 9070
+  template: src=templates/php/www.local.conf.j2 dest=/usr/local/etc/php/7.0/php-fpm.d/www.local.conf
+  notify: php70
+  tags: php
+
+- name: Install php 7.1
+  homebrew:
+    name: php@7.1
+    state: present
+  tags: php
+- name: Install php71 ini configuration
+  template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.1/conf.d/99-local.ini
+  notify: php71
+  tags: php
+- name: Install php71 fpm configuration
+  vars:
+    - php_fpm_port: 9071
+  template: src=templates/php/www.local.conf.j2 dest=/usr/local/etc/php/7.1/php-fpm.d/www.local.conf
+  notify: php71
+  tags: php
+
+- name: Install php 7.2
+  homebrew:
+    name: php@7.2
+    state: present
+  tags: php
+- name: Install php72 ini configuration
+  template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.2/conf.d/99-local.ini
+  notify: php72
+  tags: php
+- name: Install php72 fpm configuration
+  vars:
+    - php_fpm_port: 9072
+  template: src=templates/php/www.local.conf.j2 dest=/usr/local/etc/php/7.2/php-fpm.d/www.local.conf
+  notify: php72
+  tags: php

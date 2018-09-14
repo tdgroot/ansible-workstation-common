@@ -7,6 +7,7 @@ primary_group: timon
 primary_homedir: "/home/{{ primary_user }}"
 php_fpm_port: 9071
 php_session_directory: "{{ primary_homedir}}/.php-session"
+nginx_root_directory: "/etc/nginx"
 nginx_temp_directory: "{{ primary_homedir }}/.nginx-tmp"
 install_atom: true
 install_aws: true

@@ -5,7 +5,12 @@ group = {{ primary_user }}
 
 listen = 127.0.0.1:{{ php_fpm_port }}
 
+{% if ansible_distribution == "Fedora" %}
+
 listen.acl_users = nginx
+
+{% endif %}
+
 listen.allowed_clients = 127.0.0.1
 
 php_admin_value[sendmail_path] = /usr/local/bin/catchmail -f me@localhost

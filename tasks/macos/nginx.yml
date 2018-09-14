@@ -1,0 +1,71 @@
+---
+- name: Install nginx
+  homebrew:
+    name: nginx
+    state: present
+  notify: nginx
+  tags: nginx
+
+- name: Create nginx conf.d directory
+  file:
+    path: "{{ nginx_root_directory }}/conf.d"
+    state: directory
+    owner: "{{ primary_user }}"
+    group: admin
+  tags: nginx
+
+- name: Install nginx/nginx.conf
+  template:
+    src: templates/nginx/nginx.conf.j2
+    dest: /usr/local/etc/nginx/nginx.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/default.conf
+  template:
+    src: templates/nginx/default.conf.j2
+    dest: /usr/local/etc/nginx/default.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/magento.conf
+  template:
+    src: templates/nginx/magento.conf.j2
+    dest: /usr/local/etc/nginx/magento.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/magento2.conf
+  template:
+    src: templates/nginx/magento2.conf.j2
+    dest: /usr/local/etc/nginx/magento2.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/wordpress.conf
+  template:
+    src: templates/nginx/wordpress.conf.j2
+    dest: /usr/local/etc/nginx/wordpress.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/wordpress-multisite.conf
+  template:
+    src: templates/nginx/wordpress-multisite.conf.j2
+    dest: /usr/local/etc/nginx/wordpress-multisite.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/conf.d/php-fpm.conf
+  template:
+    src: templates/nginx/php-fpm.conf.j2
+    dest: /usr/local/etc/nginx/conf.d/php-fpm.conf
+  notify: nginx
+  tags: nginx
+- name: Install nginx/conf.d/mailcatcher.conf
+  template:
+    src: templates/nginx/mailcatcher.conf.j2
+    dest: /usr/local/etc/nginx/conf.d/mailcatcher.conf
+  notify: nginx
+  tags: nginx
+
+- name: Start nginx service
+  shell: "{{ homebrew_executable }} services start nginx"
+  register: brew_service_result
+  changed_when: "'Successfully started `nginx`' in brew_service_result.stdout"
+  become: true
+  tags: nginx

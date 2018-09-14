@@ -111,18 +111,9 @@
     - name: Start redis service
       systemd: name=redis enabled=true state=started
 
-- name: Install mailcatcher
-  gem:
-    name: mailcatcher
-    state: present
-    user_install: false
-- name: Create mailcatcher service
-  template: src=templates/mailcatcher/mailcatcher.service.j2 dest=/usr/lib/systemd/system/mailcatcher.service
-  notify:
-    - systemd
-    - mailcatcher
-- name: Run mailcatcher service
-  systemd: name=mailcatcher enabled=true state=started
+- name: Include fedora/mailcatcher
+  include_tasks: fedora/mailcatcher.yml
+  tags: mailcatcher
 
 - name: Install php
   include_tasks: fedora/php.yml
@@ -232,31 +223,6 @@
   become_user: "{{ primary_user }}"
   when: install_magerun
 
-- name: Clone oh-my-zsh
-  git:
-    repo: https://github.com/robbyrussell/oh-my-zsh.git
-    dest: "/home/{{ primary_user }}/.oh-my-zsh"
-    clone: true
-    update: true
-    version: master
-  tags:
-    - zsh
-  become: true
-  become_user: "{{ primary_user }}"
-- name: Register .zshrc existence
-  stat: path="/home/{{ primary_user }}/.zshrc"
-  register: zshrc_file
-  become: true
-  become_user: "{{ primary_user }}"
-- name: Copy .zshrc
-  copy:
-    src: "/home/{{ primary_user }}/.oh-my-zsh/templates/zshrc.zsh-template"
-    dest: "/home/{{ primary_user }}/.zshrc"
-    remote_src: true
-  when: not zshrc_file.stat.exists
-  become: true
-  become_user: "{{ primary_user }}"
-- name: Init shell
-  user:
-    name: "{{ primary_user }}"
-    shell: /bin/zsh
+- name: Include common/zsh
+  include_tasks: common/zsh.yml
+  tags: zsh
