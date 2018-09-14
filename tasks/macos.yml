@@ -64,6 +64,10 @@
   include_tasks: macos/mailcatcher.yml
   tags: mailcatcher
 
+- name: Include macos/dnsmasq
+  include_tasks: macos/dnsmasq.yml
+  tags: dnsmasq
+
 - name: Include common/zsh
   include_tasks: common/zsh.yml
   tags: zsh

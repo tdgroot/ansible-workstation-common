@@ -1,0 +1,35 @@
+---
+# https://gist.github.com/ogrrd/5831371#add-local-dns-to-search-order-in-system-preferences
+- name: Install dnsmasq localhost configuration
+  copy:
+    src: files/dnsmasq/localhost.conf
+    dest: /usr/local/etc/dnsmasq.d/localhost.conf
+  tags: dnsmasq
+
+
+- name: Disable default php70 session.save_path
+  lineinfile:
+    path: /usr/local/etc/dnsmasq.conf
+    regexp: '^#(conf-dir\=\/usr\/local\/etc\/dnsmasq\.d\/,\*\.conf)'
+    backrefs: true
+    line: '\1'
+
+- name: Create /etc/resolver directory
+  file:
+    path: /etc/resolver
+    state: directory
+  tags: dnsmasq
+
+- name: Create /etc/resolver/localhost configuration
+  copy:
+    src: files/dnsmasq/resolver/localhost
+    dest: /etc/resolver/localhost
+  become: true
+  tags: dnsmasq
+
+- name: Start dnsmasq service
+  shell: "{{ homebrew_executable }} services start dnsmasq"
+  register: brew_service_result
+  changed_when: "'Successfully started `dnsmasq`' in brew_service_result.stdout"
+  become: true
+  tags: dnsmasq
