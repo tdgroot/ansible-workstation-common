@@ -1,0 +1,18 @@
+---
+- name: Install python3
+  homebrew:
+    name: python
+    state: present
+  tags: python
+
+- name: Create python symlink in /usr/local/bin
+  file:
+    src: /usr/local/bin/python3
+    dest: /usr/local/bin/python
+    state: link
+  tags: python
+
+- name: Set ansible_python_interpreter to python3
+  set_fact:
+    ansible_python_interpreter: /usr/local/bin/python3
+  tags: python
