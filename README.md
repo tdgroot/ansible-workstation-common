@@ -11,11 +11,12 @@ Common tasks for installing and configuring Fedora Workstation and MacOS.
 This project is tested and running on:
 - Fedora Workstation 27
 - Fedora Workstation 28
+- MacOS (**in development, tests need to be added**)
 
 Requirements
 ------------
 
-A running instance of Fedora Workstation with ssh key access to root.
+A running instance of Fedora Workstation/MacOS with ssh key access.
 
 Role Variables
 --------------
@@ -39,8 +40,12 @@ Example Playbook
 ----------------
 
     - hosts: all
+      become_method: sudo
+      vars:
+        - primary_user: john
+        - primary_group: john
       roles:
-         - { role: tdgroot.workstation-common }
+        - { role: tdgroot.workstation-common }
 
 License
 -------
