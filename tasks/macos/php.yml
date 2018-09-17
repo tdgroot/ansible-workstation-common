@@ -51,3 +51,9 @@
   template: src=templates/php/www.local.conf.j2 dest=/usr/local/etc/php/7.2/php-fpm.d/www.local.conf
   notify: php72
   tags: php
+
+- name: Link php 7.1 as default php
+  shell: "brew unlink php && brew link php@7.1"
+  register: brew_link_result
+  changed_when: "not '0 symlinks removed' in brew_link_result.stdout"
+  failed_when: "not (('symlinks removed' in brew_link_result.stdout) or ('symlinks created' in brew_link_result.stdout))"
