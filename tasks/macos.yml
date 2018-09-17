@@ -41,13 +41,6 @@
     - { name: "libtool", options: "universal" }
     - { name: "openssh", options: "with-brewed-openssl with-keychain-support" }
 
-- name: Install python packages
-  pip:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - mysqlclient
-
 - name: Include macos/mysql
   include_tasks: macos/mysql.yml
   tags: mariadb mysql

@@ -16,3 +16,11 @@
   set_fact:
     ansible_python_interpreter: /usr/local/bin/python3
   tags: python
+
+- name: Install python packages
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ansible
+    - mysqlclient
