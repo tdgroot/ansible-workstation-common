@@ -7,7 +7,7 @@
 - name: Install php 7.0
   homebrew:
     name: php@7.0
-    state: present
+    state: latest
   tags: php
 - name: Install php70 ini configuration
   template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.0/conf.d/99-local.ini
@@ -23,7 +23,7 @@
 - name: Install php 7.1
   homebrew:
     name: php@7.1
-    state: present
+    state: latest
   tags: php
 - name: Install php71 ini configuration
   template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.1/conf.d/99-local.ini
@@ -39,7 +39,7 @@
 - name: Install php 7.2
   homebrew:
     name: php@7.2
-    state: present
+    state: latest
   tags: php
 - name: Install php72 ini configuration
   template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.2/conf.d/99-local.ini
