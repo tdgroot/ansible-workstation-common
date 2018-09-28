@@ -23,4 +23,3 @@
     state: present
   with_items:
     - ansible
-    - mysqlclient

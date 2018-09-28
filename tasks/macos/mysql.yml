@@ -5,6 +5,12 @@
     state: present
   tags: mariadb mysql
 
+- name: Install python-mysqlclient
+  pip:
+    name: mysqlclient
+    state: present
+  tags: mariadb mysql
+
 - name: Start mariadb service
   shell: "{{ homebrew_executable }} services start mariadb"
   register: brew_service_result
