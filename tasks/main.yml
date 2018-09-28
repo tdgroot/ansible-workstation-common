@@ -3,6 +3,8 @@
 - name: Run Fedora flavor
   include_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
+  tags: nginx
 - name: Run MacOS flavor
   include_tasks: macos.yml
   when: ansible_distribution == "MacOSX"
+  tags: nginx

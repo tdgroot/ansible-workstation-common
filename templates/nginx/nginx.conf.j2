@@ -23,6 +23,7 @@ http {
     access_log  /var/log/nginx/access.log  main;
 {% endif %}
 
+    charset             utf-8;
     sendfile            on;
     tcp_nopush          on;
     tcp_nodelay         on;
@@ -44,4 +45,9 @@ http {
 
     # Load user files
     include {{ primary_homedir }}/nginx/*.conf;
+
+    server {
+        listen 80 default_server;
+        root {{ nginx_www_path }}/default;
+    }
 }

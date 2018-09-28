@@ -91,3 +91,20 @@
     enabled: true
     state: started
   tags: nginx
+- name: Create /var/www/html/default
+  file:
+    path: "{{ nginx_www_path }}/default"
+    state: directory
+    owner: "{{ primary_user }}"
+    group: "{{ primary_group }}"
+    mode: 0755
+  become: true
+  tags: nginx
+- name: Create default server page
+  copy:
+    src: files/nginx/index.html
+    dest: "{{ nginx_www_path }}/default"
+    owner: "{{ primary_user }}"
+    group: "{{ primary_group }}"
+    mode: 0755
+  tags: nginx

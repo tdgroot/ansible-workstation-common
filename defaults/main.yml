@@ -9,6 +9,7 @@ php_fpm_port: 9071
 php_session_directory: "{{ primary_homedir}}/.php-session"
 nginx_root_directory: "/etc/nginx"
 nginx_temp_directory: "{{ primary_homedir }}/.nginx-tmp"
+nginx_www_path: "/var/www/html"
 install_atom: true
 install_aws: true
 install_chrome: true
