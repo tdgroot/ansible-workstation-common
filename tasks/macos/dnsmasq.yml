@@ -18,6 +18,7 @@
   file:
     path: /etc/resolver
     state: directory
+  become: true
   tags: dnsmasq
 
 - name: Create /etc/resolver/localhost configuration
