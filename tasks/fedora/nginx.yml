@@ -59,6 +59,12 @@
     dest: /etc/nginx/conf.d/mailcatcher.conf
   notify: nginx
   tags: nginx
+- name: Install nginx/php.conf
+  copy:
+    src: files/nginx/php.conf
+    dest: "{{ nginx_root_directory }}/php.conf"
+  notify: nginx
+  tags: nginx
 - name: Start nginx service
   systemd:
     name: nginx
