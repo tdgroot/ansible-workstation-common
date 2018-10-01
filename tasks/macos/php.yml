@@ -65,3 +65,9 @@
     - { version: 7.0, alias: php70 }
     - { version: 7.1, alias: php71 }
     - { version: 7.2, alias: php72 }
+
+- name: Install composer
+  homebrew:
+    name: composer
+    state: present
+  tags: php
