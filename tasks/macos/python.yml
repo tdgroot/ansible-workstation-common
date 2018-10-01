@@ -23,3 +23,5 @@
     state: present
   with_items:
     - ansible
+    - botocore
+    - boto3
