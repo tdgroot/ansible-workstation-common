@@ -53,10 +53,9 @@
   tags: php
 
 - name: Link php 7.1 as default php
-  shell: "brew unlink php && brew link php@7.1"
+  shell: "brew link php@7.1 --force"
   register: brew_link_result
-  changed_when: "not '0 symlinks removed' in brew_link_result.stdout"
-  failed_when: "not (('symlinks removed' in brew_link_result.stdout) or ('symlinks created' in brew_link_result.stdout))"
+  changed_when: "'symlinks created' in brew_link_result.stdout"
 
 - name: Create php bin symlinks
   shell: "ln -fs $(find /usr/local/Cellar/php* -name 'php' -type f | grep {{ item.version }} | head -n 1) /usr/local/bin/{{ item.alias }}"
