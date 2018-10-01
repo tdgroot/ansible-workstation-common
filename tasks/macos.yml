@@ -29,6 +29,7 @@
     state: present
     install_options: "{{ item.options }}"
   with_items:
+    - { name: "awscli", options: "" }
     - { name: "dnsmasq", options: "" }
     - { name: "htop", options: "" }
     - { name: "nginx", options: "" }
