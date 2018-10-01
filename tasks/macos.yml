@@ -62,6 +62,10 @@
   include_tasks: macos/dnsmasq.yml
   tags: dnsmasq
 
+- name: Include macos/npm.yml
+  include_tasks: macos/npm.yml
+  tags: npm
+
 - name: Include common/zsh
   include_tasks: common/zsh.yml
   tags: zsh
