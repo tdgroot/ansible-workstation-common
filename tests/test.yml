@@ -1,9 +1,0 @@
----
-- hosts: all
-  vars:
-    disable_selinux: false
-  pre_tasks:
-    - user:
-        name: timon
-  roles:
-    - role_under_test
