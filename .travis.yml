@@ -2,8 +2,13 @@
 os:
   - linux
   - osx
-sudo: required
 language: python
+matrix:
+  include:
+    - os: linux
+      sudo: required
+    - os: osx
+      language: generic
 services:
   - docker
 cache:
