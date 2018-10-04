@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  become_method: sudo
+  vars:
+    disable_selinux: false
+    primary_group: staff
+  roles:
+    - role: ansible-workstation-common

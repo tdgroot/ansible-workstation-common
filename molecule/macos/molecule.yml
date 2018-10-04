@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: delegated
+  options:
+    managed: False
+    ansible_connection_options:
+      connection: local
+lint:
+  name: yamllint
+platforms:
+  - name: instance
+    image: centos:7
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: macos
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
+    enabled: true
