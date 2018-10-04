@@ -9,6 +9,8 @@ driver:
       connection: local
 lint:
   name: yamllint
+platforms:
+  - name: local
 provisioner:
   name: ansible
   lint:
