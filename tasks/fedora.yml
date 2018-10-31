@@ -38,6 +38,7 @@
     - libselinux-python
     - mycli
     - nano
+    - pv
     - python2-mysql
     - python-docker
     - redhat-rpm-config
