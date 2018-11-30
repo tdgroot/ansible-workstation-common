@@ -42,6 +42,7 @@
     - php70-php-xml
     - php70-php-zip
     - php70-php-redis
+    - php70-php-process
   notify: php70
   tags: php
 - name: Install php70 configuration
@@ -88,6 +89,7 @@
     - php71-php-xml
     - php71-php-zip
     - php71-php-redis
+    - php71-php-process
   notify: php71
   tags: php
 - name: Install php71 configuration
@@ -134,6 +136,7 @@
     - php72-php-xml
     - php72-php-zip
     - php72-php-redis
+    - php72-php-process
   notify: php72
   tags: php
 - name: Install php72 configuration
