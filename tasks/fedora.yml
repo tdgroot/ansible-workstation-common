@@ -168,6 +168,11 @@
     state: present
   when: system_is_macmini
 
+- name: Init /etc/sysfs.d
+  file:
+    path: /etc/sysfs.d
+    state: directory
+
 - name: Set sleep mode to deep
   copy:
     content: deep
