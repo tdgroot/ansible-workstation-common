@@ -183,6 +183,16 @@
     content: deep
     dest: /etc/sysfs.d/mem_sleep.conf
 
+- name: Reverse Apple keyboard fn keys
+  copy:
+    content: options hid_apple fnmode=2
+    dest: /etc/modprobe.d/hid_apple.conf
+  when: reverse_apple_keyboard_fn_keys
+
+- name: Regenerate initramfs
+  shell: "dracut --regenerate-all --force"
+  when: reverse_apple_keyboard_fn_keys
+
 - name: Install Nvidia drivers
   dnf: name={{ item }} state=present
   with_items:
