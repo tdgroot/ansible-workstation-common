@@ -30,6 +30,7 @@
     - bzr
     - cloc
     - dmidecode
+    - dnf-plugins-core
     - filezilla
     - gcc-c++
     - gnome-terminal-nautilus
