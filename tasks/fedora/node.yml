@@ -1,0 +1,17 @@
+---
+- name: Install Node.js
+  dnf:
+    name: nodejs
+    state: present
+  tags: node
+
+- name:
+  npm:
+    name: "{{ item }}"
+    state: present
+    global: true
+  with_items:
+    - gulp
+    - grunt
+    - yarn
+  tags: node

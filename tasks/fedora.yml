@@ -125,6 +125,10 @@
   include_tasks: fedora/nginx.yml
   tags: nginx
 
+- name: Install Node.js
+  include_tasks: fedora/node.yml
+  tags: node
+
 - name: Install awscli
   include_tasks: fedora/aws.yml
   when: install_aws
