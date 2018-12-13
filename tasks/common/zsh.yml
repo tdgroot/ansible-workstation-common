@@ -6,6 +6,8 @@
     clone: true
     update: true
     version: master
+  become: true
+  become_user: "{{ primary_user }}"
   tags: zsh
 
 - name: Register .zshrc existence
@@ -20,6 +22,12 @@
     dest: "{{ primary_homedir }}/.zshrc"
     remote_src: true
   when: not zshrc_file.stat.exists
+  tags: zsh
+
+- name: Install zsh
+  dnf:
+    name: zsh
+    state: present
   tags: zsh
 
 - name: Init shell

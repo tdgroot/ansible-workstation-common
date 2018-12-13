@@ -51,7 +51,6 @@
     - vim
     - vim-powerline
     - vlc
-    - zsh
 
 - name: Get system product name
   shell: "dmidecode -s system-product-name"
