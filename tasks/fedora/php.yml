@@ -127,7 +127,6 @@
     - php72-php-intl
     - php72-php-json
     - php72-php-mbstring
-    - php72-php-mcrypt
     - php72-php-mysqlnd
     - php72-php-opcache
     - php72-php-pdo
@@ -159,9 +158,9 @@
 - name: Start php72-php-fpm service
   systemd: name=php72-php-fpm enabled=true state=started
   tags: php
-- name: php72-mcrypt is not installed
+- name: php72-php-mcrypt is not installed
   dnf:
-    name: php72-mcrypt
+    name: php72-php-mcrypt
     state: absent
   notify: php72
   tags: php
