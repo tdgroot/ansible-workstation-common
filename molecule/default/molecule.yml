@@ -18,6 +18,12 @@ platforms:
     privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - name: fedora29
+    image: tdgroot/fedora29-ansible:latest
+    command: /usr/lib/systemd/systemd
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 provisioner:
   name: ansible
   lint:
