@@ -35,6 +35,8 @@
     - gcc-c++
     - gnome-terminal-nautilus
     - gnome-tweak-tool
+    - gstreamer
+    - gstreamer-plugins-base
     - htop
     - libselinux-python
     - mycli
