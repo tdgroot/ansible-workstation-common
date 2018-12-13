@@ -159,6 +159,12 @@
 - name: Start php72-php-fpm service
   systemd: name=php72-php-fpm enabled=true state=started
   tags: php
+- name: php72-mcrypt is not installed
+  dnf:
+    name: php72-mcrypt
+    state: absent
+  notify: php72
+  tags: php
 
 - name: Install composer
   dnf:
