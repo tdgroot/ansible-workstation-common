@@ -42,6 +42,7 @@
     - pv
     - python2-mysql
     - python-docker
+    - python3-mysql
     - redhat-rpm-config
     - ruby
     - ruby-devel
