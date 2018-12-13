@@ -214,6 +214,14 @@
     - winetricks
   when: install_wine
 
+- name: Install n98-magerun
+  get_url:
+    url: https://files.magerun.net/n98-magerun.phar
+    dest: "/home/{{ primary_user }}/bin/n98-magerun"
+    mode: u=rwx,g=rx,o=rx
+  become: true
+  become_user: "{{ primary_user }}"
+  when: install_magerun
 - name: Install n98-magerun2
   get_url:
     url: https://files.magerun.net/n98-magerun2.phar
