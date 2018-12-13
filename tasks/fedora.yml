@@ -47,6 +47,7 @@
     - snapd
     - sqlite
     - sqlite-devel
+    - sysfsutils
     - terminator
     - vim
     - vim-powerline
@@ -165,6 +166,11 @@
     name: broadcom-wl
     state: present
   when: system_is_macmini
+
+- name: Set sleep mode to deep
+  copy:
+    content: deep
+    dest: /etc/sysfs.d/mem_sleep.conf
 
 - name: Install Nvidia drivers
   dnf: name={{ item }} state=present
