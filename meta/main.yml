@@ -13,8 +13,8 @@ galaxy_info:
   platforms:
     - name: Fedora
       versions:
-        - 27
         - 28
+        - 29
     - name: MacOSX
       versions:
         - all
