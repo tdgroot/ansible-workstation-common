@@ -20,12 +20,14 @@
   copy:
     src: "{{ primary_homedir }}/.oh-my-zsh/templates/zshrc.zsh-template"
     dest: "{{ primary_homedir }}/.zshrc"
+    owner: "{{ primary_user }}"
+    group: "{{ primary_group }}"
     remote_src: true
   when: not zshrc_file.stat.exists
   tags: zsh
 
 - name: Install zsh
-  dnf:
+  package:
     name: zsh
     state: present
   tags: zsh
