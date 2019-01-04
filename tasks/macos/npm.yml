@@ -5,6 +5,10 @@
     state: present
     global: true
   with_items:
-    - gulp
+    - lighthouse
+    - grunt-cli
+    - gulp-cli
+    - "@vue/cli"
     - yarn
+    - stylelint
   tags: npm
