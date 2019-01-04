@@ -43,13 +43,11 @@
   tags: php
 - name: Install php73 ini configuration
   template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.3/conf.d/99-local.ini
-  notify: php73
   tags: php
 - name: Install php73 fpm configuration
   vars:
     - php_fpm_port: 9073
   template: src=templates/php/www.local.conf.j2 dest=/usr/local/etc/php/7.3/php-fpm.d/www.local.conf
-  notify: php73
   tags: php
 
 - name: Link php 7.1 as default php
