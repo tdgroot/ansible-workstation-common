@@ -6,7 +6,28 @@
 Workstation Common
 =================================
 
-Common tasks for installing and configuring Fedora Workstation and MacOS. It's a development stack using PHP, Node.js, NGINX, MariaDB, Redis, Dnsmasq and Mailcatcher. All the other sugar included, such as Docker, Vagrant, VirtualBox, Wine, Atom, Google Chrome, AWS, Composer, Magerun, Spotify, Steam, and many other tweaks.
+Common tasks for installing and configuring Fedora Workstation and MacOS. It's a development stack using:
+- PHP 
+- Node.js
+- NGINX (automatically tested and reloaded using [nginx_config_reloader](https://github.com/ByteInternet/nginx_config_reloader))
+- MariaDB
+- Redis
+- Dnsmasq
+- Mailcatcher. 
+
+All the other sugar included, such as:
+- Docker
+- Vagrant
+- VirtualBox
+- Wine
+- Atom
+- Google Chrome
+- AWS
+- Composer
+- Magerun
+- Spotify
+- Steam
+- Many other tweaks.
 
 This project is tested and running on:
 - Fedora Workstation 29
