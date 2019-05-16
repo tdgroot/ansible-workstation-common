@@ -1,6 +1,8 @@
 ---
 sudo: required
 language: python
+virtualenv:
+  system_site_packages: true
 services:
   - docker
 cache:
@@ -8,8 +10,6 @@ cache:
 before_install:
   - sudo apt-get -qq update
 install:
-  - virtualenv --no-site-packages .venv
-  - source .venv/bin/activate
   - python --version
   - pip install ansible
   - pip install -r install.txt
