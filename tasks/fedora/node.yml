@@ -6,6 +6,16 @@
   become: true
   tags: node
 
+- name: ~/.npmrc exists
+  file:
+    path: "{{ primary_homedir }}/.npmrc"
+    state: touch
+
+- name: ~/.npmrc prefix
+  lineinfile:
+    path: "{{ primary_homedir }}/.npmrc"
+    regexp: '^prefix=\$\{HOME\}\/.local'
+
 - name: Install npm packages
   npm:
     name: "{{ item }}"
