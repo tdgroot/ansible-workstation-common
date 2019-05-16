@@ -60,10 +60,13 @@ Example Playbook
 ----------------
 
     - hosts: all
+      connection: local
       become_method: sudo
       vars:
-        - primary_user: john
-        - primary_group: john
+        primary_user: john
+        primary_group: john
+        ansible_python_interpreter: /usr/bin/python3
+        ansible_become_pass: ''
       roles:
         - { role: tdgroot.workstation-common }
 
