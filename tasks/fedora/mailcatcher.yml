@@ -4,15 +4,23 @@
     name: mailcatcher
     state: present
     user_install: false
+  become: true
   tags: mailcatcher
 
 - name: Create mailcatcher service
-  template: src=templates/mailcatcher/mailcatcher.service.j2 dest=/usr/lib/systemd/system/mailcatcher.service
+  template:
+    src: templates/mailcatcher/mailcatcher.service.j2
+    dest: /usr/lib/systemd/system/mailcatcher.service
   notify:
     - systemd
     - mailcatcher
+  become: true
   tags: mailcatcher
 
 - name: Run mailcatcher service
-  systemd: name=mailcatcher enabled=true state=started
+  systemd:
+    name: mailcatcher
+    enabled: true
+    state: started
+  become: true
   tags: mailcatcher

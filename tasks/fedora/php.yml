@@ -10,15 +10,15 @@
   dnf:
     name: http://rpms.remirepo.net/fedora/remi-release-{{ ansible_distribution_version }}.rpm
     state: present
+  become: true
 - name: Enable Remi's RPM repository
   command: "dnf config-manager --set-enabled remi"
   changed_when: false
+  become: true
 - name: Create php session directory
   file:
     path: "{{ php_session_directory }}"
     state: directory
-    owner: "{{ primary_user }}"
-    group: "{{ primary_group }}"
 - name: Install php70
   dnf:
     name: "{{ item }}"
@@ -44,16 +44,19 @@
     - php70-php-redis
     - php70-php-process
   notify: php70
+  become: true
   tags: php
 - name: Install php70 configuration
   template: src=templates/php/99-local.ini.j2 dest=/etc/opt/remi/php70/php.d/99-local.ini
   notify: php70
+  become: true
   tags: php
 - name: Install php70-php-fpm configuration
   vars:
     - php_fpm_port: 9070
   template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php70/php-fpm.d/www.local.conf
   notify: php70
+  become: true
   tags: php
 - name: Disable default php70 session.save_path
   lineinfile:
@@ -62,8 +65,10 @@
     backrefs: true
     line: '; \1'
   notify: php70
+  become: true
 - name: Start php70-php-fpm service
   systemd: name=php70-php-fpm enabled=true state=started
+  become: true
   tags: php
 
 - name: Install php71
@@ -91,16 +96,19 @@
     - php71-php-redis
     - php71-php-process
   notify: php71
+  become: true
   tags: php
 - name: Install php71 configuration
   template: src=templates/php/99-local.ini.j2 dest=/etc/opt/remi/php71/php.d/99-local.ini
   notify: php71
+  become: true
   tags: php
 - name: Install php71-php-fpm configuration
   vars:
     - php_fpm_port: 9071
   template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php71/php-fpm.d/www.local.conf
   notify: php71
+  become: true
   tags: php
 - name: Disable default php71 session.save_path
   lineinfile:
@@ -109,8 +117,10 @@
     backrefs: true
     line: '; \1'
   notify: php71
+  become: true
 - name: Start php71-php-fpm service
   systemd: name=php71-php-fpm enabled=true state=started
+  become: true
   tags: php
 
 - name: Install php72
@@ -137,16 +147,19 @@
     - php72-php-redis
     - php72-php-process
   notify: php72
+  become: true
   tags: php
 - name: Install php72 configuration
   template: src=templates/php/99-local.ini.j2 dest=/etc/opt/remi/php72/php.d/99-local.ini
   notify: php72
+  become: true
   tags: php
 - name: Install php72-php-fpm configuration
   vars:
     - php_fpm_port: 9072
   template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php72/php-fpm.d/www.local.conf
   notify: php72
+  become: true
   tags: php
 - name: Disable default php72 session.save_path
   lineinfile:
@@ -154,19 +167,23 @@
     regexp: '^(php_value\[session\.save_path\].*)'
     backrefs: true
     line: '; \1'
+  become: true
   notify: php72
 - name: Start php72-php-fpm service
   systemd: name=php72-php-fpm enabled=true state=started
+  become: true
   tags: php
 - name: php72-php-mcrypt is not installed
   dnf:
     name: php72-php-mcrypt
     state: absent
   notify: php72
+  become: true
   tags: php
 
 - name: Install composer
   dnf:
     name: composer
     state: present
+  become: true
   tags: php

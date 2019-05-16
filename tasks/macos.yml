@@ -41,6 +41,7 @@
     - { name: "zsh", options: "" }
     - { name: "libtool", options: "universal" }
     - { name: "openssh", options: "with-brewed-openssl with-keychain-support" }
+    - { name: "zsh", options: "" }
 
 - name: Include macos/mysql
   include_tasks: macos/mysql.yml
@@ -68,4 +69,10 @@
 
 - name: Include common/zsh
   include_tasks: common/zsh.yml
+  tags: zsh
+
+- name: Init shell
+  user:
+    name: "{{ primary_user }}"
+    shell: /bin/zsh
   tags: zsh

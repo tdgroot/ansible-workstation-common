@@ -3,9 +3,10 @@
   dnf:
     name: nodejs
     state: present
+  become: true
   tags: node
 
-- name:
+- name: Install npm packages
   npm:
     name: "{{ item }}"
     state: present
@@ -14,4 +15,5 @@
     - gulp
     - grunt
     - yarn
+  become: true
   tags: node
