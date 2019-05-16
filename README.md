@@ -30,7 +30,7 @@ All the other sugar included, such as:
 - Many other tweaks.
 
 This project is tested and running on:
-- Fedora Workstation 29
+- Fedora Workstation 30
 - MacOS (**in development, tests need to be added**)
 
 Requirements
