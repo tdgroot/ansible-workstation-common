@@ -2,12 +2,14 @@
 # tasks file for common/fedora
 - name: Install RPM Fusion (free)
   dnf:
-    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
+    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm"
     state: present
+  become: true
 - name: Install RPM Fusion (nonfree)
   dnf:
-    name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
+    name: "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm"
     state: present
+  become: true
 
 - name: Create home directories
   file:
@@ -23,46 +25,57 @@
     - projects
 
 - name: Install simple programs
-  dnf: name={{ item }} state=present
-  with_items:
-    - '@Development Tools'
-    - ansible
-    - bzr
-    - cloc
-    - dmidecode
-    - dnf-plugins-core
-    - filezilla
-    - gcc-c++
-    - gnome-terminal-nautilus
-    - gnome-tweak-tool
-    - gstreamer
-    - gstreamer-plugins-base
-    - htop
-    - libselinux-python
-    - mycli
-    - nano
-    - pv
-    - python2-mysql
-    - python-docker
-    - python3-mysql
-    - redhat-rpm-config
-    - ruby
-    - ruby-devel
-    - snapd
-    - sqlite
-    - sqlite-devel
-    - sysfsutils
-    - terminator
-    - vim
-    - vim-powerline
-    - vlc
+  dnf:
+    name:
+      - '@Development Tools'
+      - ansible
+      - bzr
+      - cloc
+      - dmidecode
+      - dnf-plugins-core
+      - filezilla
+      - gcc-c++
+      - gnome-terminal-nautilus
+      - gnome-tweak-tool
+      - gstreamer
+      - gstreamer-plugins-base
+      - htop
+      - libselinux-python
+      - mycli
+      - nano
+      - pv
+      - python3-docker
+      - python3-mysql
+      - redhat-rpm-config
+      - ruby
+      - ruby-devel
+      - snapd
+      - sqlite
+      - sqlite-devel
+      - sysfsutils
+      - terminator
+      - vim
+      - vim-powerline
+      - vlc
+      - zsh
+      - hunspell-en
+      - hunspell-en-US
+      - hunspell-nl
+    state: present
+  become: true
+  retries: 5
+  delay: 2
+  register: dnf_result
+  until: dnf_result is succeeded
 
 - name: Get system product name
   shell: "dmidecode -s system-product-name"
   changed_when: false
   register: system_product_name
+  become: true
 
-- set_fact:
+- name: Set macmini fact
+  set_fact:
     system_is_macmini: true
   when: system_product_name|lower is search("macmini")
 
@@ -71,38 +84,47 @@
     src: /var/lib/snapd/snap
     dest: /snap
     state: link
+  become: true
 
 - name: Disable selinux
-  selinux: state=disabled
+  selinux:
+    state: disabled
+  become: true
   when: disable_selinux
 
 - name: Disable ipv6
-  template: src=templates/sysctl/99-ipv6.conf dest=/etc/sysctl.d/99-ipv6.conf
+  template:
+    src: templates/sysctl/99-ipv6.conf
+    dest: /etc/sysctl.d/99-ipv6.conf
   notify:
     - sysctl
+  become: true
   when: disable_ipv6
 
 - name: Set max_user_watches
-  template: src=templates/idea/idea.conf dest=/etc/sysctl.d/idea.conf
+  template:
+    src: templates/idea/idea.conf
+    dest: /etc/sysctl.d/idea.conf
   notify:
     - sysctl
+  become: true
 
 - name: Install vagrant
   dnf:
-    name: "{{ item }}"
+    name:
+      - vagrant
+      - vagrant-sshfs
     state: present
-  with_items:
-    - vagrant
-    - vagrant-sshfs
+  become: true
   when: install_vagrant
 
 - name: Install openjdk
   dnf:
-    name: "{{ item }}"
+    name:
+      - java
+      - java-devel
     state: present
-  with_items:
-    - java
-    - java-devel
+  become: true
   when: install_openjdk
 
 - name: Install mariadb/mysql
@@ -110,11 +132,17 @@
   tags: mariadb mysql
 
 - name: Install redis
-  block:
-    - name: Install redis
-      dnf: name=redis state=present
-    - name: Start redis service
-      systemd: name=redis enabled=true state=started
+  dnf:
+    name: redis
+    state: present
+  become: true
+
+- name: Start redis service
+  systemd:
+    name: redis
+    enabled: true
+    state: started
+  become: true
 
 - name: Include fedora/mailcatcher
   include_tasks: fedora/mailcatcher.yml
@@ -138,7 +166,10 @@
   tags: aws awscli
 
 - name: Install Docker repository
-  template: src=templates/docker/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
+  template:
+    src: templates/docker/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+  become: true
   when: install_docker
 - name: Check if docker could be installed
   command: "dnf search docker-ce"
@@ -146,101 +177,147 @@
   changed_when: false
   when: install_docker
 - name: Install Docker
-  dnf: name=docker-ce state=present
+  dnf:
+    name: docker-ce
+    state: present
+  become: true
   when: install_docker and dnf_search_docker.stdout_lines|length > 2
 - name: Run docker service
-  systemd: name=docker enabled=true state=started
+  systemd:
+    name: docker
+    enabled: true
+    state: started
+  become: true
   when: install_docker and dnf_search_docker.stdout_lines|length > 2
 - name: Add primary user to docker group
-  user: name={{ primary_user }} groups=docker append=true
+  user:
+    name: "{{ primary_user }}"
+    groups: docker
+    append: true
+  become: true
   when: install_docker and dnf_search_docker.stdout_lines|length > 2
 
 - name: Install Google Chrome repository
   copy:
     src: files/google-chrome/google-chrome.repo
     dest: /etc/yum.repos.d/google-chrome.repo
+  become: true
   when: install_chrome
 - name: Install Google Chrome
   dnf:
     name: google-chrome-stable
     state: present
+  become: true
   when: install_chrome
 - name: Install Chrome GNOME Shell integration
-  dnf: name=chrome-gnome-shell state=present
+  dnf:
+    name: chrome-gnome-shell
+    state: present
+  become: true
   when: install_chrome
 
 - name: Install Macmini wireless driver
   dnf:
     name: broadcom-wl
     state: present
+  become: true
   when: system_is_macmini
 
 - name: Init /etc/sysfs.d
   file:
     path: /etc/sysfs.d
     state: directory
+  become: true
 
 - name: Set sleep mode to deep
   copy:
     content: deep
     dest: /etc/sysfs.d/mem_sleep.conf
+  become: true
 
 - name: Reverse Apple keyboard fn keys
   copy:
     content: options hid_apple fnmode=2
     dest: /etc/modprobe.d/hid_apple.conf
+  become: true
   when: reverse_apple_keyboard_fn_keys
 
 - name: Regenerate initramfs
   shell: "dracut --regenerate-all --force"
+  become: true
   when: reverse_apple_keyboard_fn_keys
 
 - name: Install Nvidia drivers
-  dnf: name={{ item }} state=present
-  with_items:
-    - xorg-x11-drv-nvidia
-    - akmod-nvidia
+  dnf:
+    name:
+      - xorg-x11-drv-nvidia
+      - akmod-nvidia
+    state: present
+  become: true
   when: install_nvidia_drivers
 
 - name: Install Steam
-  dnf: name=steam state=present
+  dnf:
+    name: steam
+    state: present
+  become: true
   when: install_steam
 
 - name: Install Owncloud
-  dnf: name={{ item }} state=present
-  with_items:
-    - owncloud-client
-    - owncloud-client-nautilus
+  dnf:
+    name:
+      - owncloud-client
+      - owncloud-client-nautilus
+    state: present
+  become: true
   when: install_owncloud_client
 
 - name: Import Atom gpgkey
   rpm_key:
     key: https://packagecloud.io/AtomEditor/atom/gpgkey
     state: present
+  become: true
   when: install_atom
 - name: Install Atom repository
-  template: src=templates/atom/atom.repo dest=/etc/yum.repos.d/atom.repo
+  template:
+    src: templates/atom/atom.repo
+    dest: /etc/yum.repos.d/atom.repo
+  become: true
   when: install_atom
 - name: Install Atom
-  dnf: name=atom state=present
+  dnf:
+    name: atom
+    state: present
+  become: true
   when: install_atom
 
 - name: Install Spotify repository
-  get_url: url=https://negativo17.org/repos/fedora-spotify.repo dest=/etc/yum.repos.d/fedora-spotify.repo
+  get_url:
+    url: https://negativo17.org/repos/fedora-spotify.repo
+    dest: /etc/yum.repos.d/fedora-spotify.repo
+  become: true
   when: install_spotify
 - name: Install Spotify
-  dnf: name=spotify state=present
+  dnf:
+    name: spotify
+    state: present
+  become: true
   when: install_spotify
 
 - name: Install Virtualbox
-  dnf: name=VirtualBox state=present
+  dnf:
+    name: VirtualBox
+    state: present
+  become: true
   when: install_virtualbox
 
 - name: Install Wine
-  dnf: name={{ item }} state=present
-  with_items:
-    - wine
-    - winetricks
+  dnf:
+    name:
+      - wine
+      - winetricks
+    state: present
+  become: true
   when: install_wine
 
 - name: Install n98-magerun
@@ -248,18 +325,21 @@
     url: https://files.magerun.net/n98-magerun.phar
     dest: "/home/{{ primary_user }}/bin/n98-magerun"
     mode: u=rwx,g=rx,o=rx
-  become: true
-  become_user: "{{ primary_user }}"
   when: install_magerun
 - name: Install n98-magerun2
   get_url:
     url: https://files.magerun.net/n98-magerun2.phar
     dest: "/home/{{ primary_user }}/bin/n98-magerun2"
     mode: u=rwx,g=rx,o=rx
-  become: true
-  become_user: "{{ primary_user }}"
   when: install_magerun
 
 - name: Include common/zsh
   include_tasks: common/zsh.yml
+  tags: zsh
+
+- name: Init shell
+  user:
+    name: "{{ primary_user }}"
+    shell: /bin/zsh
+  become: true
   tags: zsh

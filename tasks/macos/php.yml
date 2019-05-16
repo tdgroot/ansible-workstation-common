@@ -7,7 +7,7 @@
 - name: Install php 7.1
   homebrew:
     name: php@7.1
-    state: latest
+    state: present
   tags: php
 - name: Install php71 ini configuration
   template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.1/conf.d/99-local.ini
@@ -23,7 +23,7 @@
 - name: Install php 7.2
   homebrew:
     name: php@7.2
-    state: latest
+    state: present
   tags: php
 - name: Install php72 ini configuration
   template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.2/conf.d/99-local.ini
@@ -39,7 +39,7 @@
 - name: Install php 7.3
   homebrew:
     name: php@7.3
-    state: latest
+    state: present
   tags: php
 - name: Install php73 ini configuration
   template: src=templates/php/99-local.ini.j2 dest=/usr/local/etc/php/7.3/conf.d/99-local.ini
@@ -54,6 +54,7 @@
   shell: "brew link php@7.1 --force"
   register: brew_link_result
   changed_when: "'symlinks created' in brew_link_result.stdout"
+  become: true
 
 - name: Create php bin symlinks
   shell: "ln -fs $(find /usr/local/Cellar/php* -name 'php' -type f | grep {{ item.version }} | head -n 1) /usr/local/bin/{{ item.alias }}"

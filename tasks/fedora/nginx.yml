@@ -3,79 +3,89 @@
   file:
     path: "{{ nginx_temp_directory }}"
     state: directory
-    owner: "{{ primary_user }}"
-    group: "{{ primary_group }}"
 - name: Install nginx
   dnf:
     name: nginx
     state: present
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/nginx.conf
   template:
     src: templates/nginx/nginx.conf.j2
     dest: /etc/nginx/nginx.conf
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/default.conf
   template:
     src: templates/nginx/default.conf.j2
     dest: /etc/nginx/default.conf
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/magento.conf
   template:
     src: templates/nginx/magento.conf.j2
     dest: /etc/nginx/magento.conf
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/magento2.conf
   template:
     src: templates/nginx/magento2.conf.j2
     dest: /etc/nginx/magento2.conf
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/wordpress.conf
   template:
     src: templates/nginx/wordpress.conf.j2
     dest: /etc/nginx/wordpress.conf
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/wordpress-multisite.conf
   template:
     src: templates/nginx/wordpress-multisite.conf.j2
     dest: /etc/nginx/wordpress-multisite.conf
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/conf.d/php-fpm.conf
   template:
     src: templates/nginx/php-fpm.conf.j2
     dest: /etc/nginx/conf.d/php-fpm.conf
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/conf.d/mailcatcher.conf
   template:
     src: templates/nginx/mailcatcher.conf.j2
     dest: /etc/nginx/conf.d/mailcatcher.conf
   notify: nginx
+  become: true
   tags: nginx
 - name: Install nginx/php.conf
   copy:
     src: files/nginx/php.conf
     dest: "{{ nginx_root_directory }}/php.conf"
   notify: nginx
+  become: true
   tags: nginx
 - name: Start nginx service
   systemd:
     name: nginx
     enabled: true
     state: started
+  become: true
   tags: nginx
 
 - name: Install nginx_config_reloader
   pip:
     name: git+https://github.com/ByteInternet/nginx_config_reloader#egg=nginx_config_reloader
     state: present
+  become: true
   tags: nginx
 - name: Create nginx_config_reloader service
   template:
@@ -84,12 +94,14 @@
   notify:
     - systemd
     - nginx-config-reloader
+  become: true
   tags: nginx
 - name: Run nginx-config-reloader service
   systemd:
     name: nginx-config-reloader
     enabled: true
     state: started
+  become: true
   tags: nginx
 - name: Create /var/www/html/default
   file:
@@ -107,4 +119,5 @@
     owner: "{{ primary_user }}"
     group: "{{ primary_group }}"
     mode: 0755
+  become: true
   tags: nginx

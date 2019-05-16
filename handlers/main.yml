@@ -2,21 +2,31 @@
 # handlers file for common
 - name: php-fpm
   systemd: name=php-fpm state=restarted
+  become: true
 - name: nginx
   systemd: name=nginx state=restarted
+  become: true
 - name: mariadb
   systemd: name=nginx state=restarted
+  become: true
 - name: systemd
   systemd: daemon_reload=true
+  become: true
 - name: sysctl
   command: sysctl -p --system
+  become: true
 - name: nginx-config-reloader
   systemd: name=nginx-config-reloader state=restarted
-- name: php70
-  systemd: name=php70-php-fpm state=restarted
+  become: true
 - name: php71
   systemd: name=php71-php-fpm state=restarted
+  become: true
 - name: php72
   systemd: name=php72-php-fpm state=restarted
+  become: true
+- name: php73
+  systemd: name=php73-php-fpm state=restarted
+  become: true
 - name: mailcatcher
   systemd: name=mailcatcher state=restarted
+  become: true

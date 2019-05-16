@@ -1,11 +1,11 @@
 ---
 - name: Install mariadb
   dnf:
-    name: "{{ item }}"
+    name:
+      - mariadb
+      - mariadb-server
     state: present
-  with_items:
-    - mariadb
-    - mariadb-server
+  become: true
   tags: mariadb mysql
 
 - name: Start mariadb service
@@ -13,6 +13,7 @@
     name: mariadb
     enabled: true
     state: started
+  become: true
   tags: mariadb mysql
 
 - name: Set mariadb root password
@@ -20,9 +21,9 @@
     name: root
     password: "{{ mysql_root_password }}"
     login_password: "{{ mysql_old_root_password }}"
-  when: mysql_root_password != mysql_old_root_password
   ignore_errors: true
   tags: mariadb mysql
+  when: mysql_root_password != mysql_old_root_password
 
 - name: Create ~/.my.cnf
   template:
@@ -37,4 +38,5 @@
     src: files/mysql/local.cnf
     dest: /etc/my.cnf.d/local.cnf
   notify: mariadb
+  become: true
   tags: mariadb mysql

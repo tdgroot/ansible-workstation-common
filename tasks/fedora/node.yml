@@ -3,9 +3,22 @@
   dnf:
     name: nodejs
     state: present
+  become: true
   tags: node
 
-- name:
+- name: ~/.npmrc exists
+  file:
+    path: "{{ primary_homedir }}/.npmrc"
+    state: touch
+  changed_when: false
+
+- name: ~/.npmrc prefix
+  lineinfile:
+    path: "{{ primary_homedir }}/.npmrc"
+    regexp: '^prefix=\$\{HOME\}\/.local'
+    line: 'prefix=${HOME}/.local'
+
+- name: Install npm packages
   npm:
     name: "{{ item }}"
     state: present

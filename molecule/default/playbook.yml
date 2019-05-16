@@ -1,7 +1,11 @@
 ---
 - name: Converge
   hosts: all
+  remote_user: timon
+  become_method: sudo
   vars:
     disable_selinux: false
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_become_pass: ''
   roles:
     - role: ansible-workstation-common
