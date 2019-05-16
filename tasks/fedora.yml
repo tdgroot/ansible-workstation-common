@@ -58,6 +58,9 @@
       - vim-powerline
       - vlc
       - zsh
+      - hunspell-en
+      - hunspell-en-US
+      - hunspell-nl
     state: present
   become: true
 
