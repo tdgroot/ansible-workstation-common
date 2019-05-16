@@ -19,57 +19,6 @@
   file:
     path: "{{ php_session_directory }}"
     state: directory
-- name: Install php70
-  dnf:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - php70-php
-    - php70-php-apcu
-    - php70-php-bcmath
-    - php70-php-fpm
-    - php70-php-gd
-    - php70-php-imagick
-    - php70-php-intl
-    - php70-php-json
-    - php70-php-mbstring
-    - php70-php-mcrypt
-    - php70-php-mysqlnd
-    - php70-php-opcache
-    - php70-php-pdo
-    - php70-php-soap
-    - php70-php-xdebug
-    - php70-php-xml
-    - php70-php-zip
-    - php70-php-redis
-    - php70-php-process
-  notify: php70
-  become: true
-  tags: php
-- name: Install php70 configuration
-  template: src=templates/php/99-local.ini.j2 dest=/etc/opt/remi/php70/php.d/99-local.ini
-  notify: php70
-  become: true
-  tags: php
-- name: Install php70-php-fpm configuration
-  vars:
-    - php_fpm_port: 9070
-  template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php70/php-fpm.d/www.local.conf
-  notify: php70
-  become: true
-  tags: php
-- name: Disable default php70 session.save_path
-  lineinfile:
-    path: /etc/opt/remi/php70/php-fpm.d/www.conf
-    regexp: '^(php_value\[session\.save_path\].*)'
-    backrefs: true
-    line: '; \1'
-  notify: php70
-  become: true
-- name: Start php70-php-fpm service
-  systemd: name=php70-php-fpm enabled=true state=started
-  become: true
-  tags: php
 
 - name: Install php71
   dnf:
@@ -178,6 +127,64 @@
     name: php72-php-mcrypt
     state: absent
   notify: php72
+  become: true
+  tags: php
+
+  - name: Install php73
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - php73-php
+    - php73-php-apcu
+    - php73-php-bcmath
+    - php73-php-fpm
+    - php73-php-gd
+    - php73-php-imagick
+    - php73-php-intl
+    - php73-php-json
+    - php73-php-mbstring
+    - php73-php-mysqlnd
+    - php73-php-opcache
+    - php73-php-pdo
+    - php73-php-soap
+    - php73-php-xdebug
+    - php73-php-xml
+    - php73-php-zip
+    - php73-php-redis
+    - php73-php-process
+  notify: php73
+  become: true
+  tags: php
+- name: Install php73 configuration
+  template: src=templates/php/99-local.ini.j2 dest=/etc/opt/remi/php73/php.d/99-local.ini
+  notify: php73
+  become: true
+  tags: php
+- name: Install php73-php-fpm configuration
+  vars:
+    - php_fpm_port: 9073
+  template: src=templates/php/www.local.conf.j2 dest=/etc/opt/remi/php73/php-fpm.d/www.local.conf
+  notify: php73
+  become: true
+  tags: php
+- name: Disable default php73 session.save_path
+  lineinfile:
+    path: /etc/opt/remi/php73/php-fpm.d/www.conf
+    regexp: '^(php_value\[session\.save_path\].*)'
+    backrefs: true
+    line: '; \1'
+  become: true
+  notify: php73
+- name: Start php73-php-fpm service
+  systemd: name=php73-php-fpm enabled=true state=started
+  become: true
+  tags: php
+- name: php73-php-mcrypt is not installed
+  dnf:
+    name: php73-php-mcrypt
+    state: absent
+  notify: php73
   become: true
   tags: php
 
