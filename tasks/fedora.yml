@@ -44,7 +44,7 @@
       - mycli
       - nano
       - pv
-      - python-docker
+      - python3-docker
       - python3-mysql
       - redhat-rpm-config
       - ruby
