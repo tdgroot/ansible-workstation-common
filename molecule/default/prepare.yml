@@ -6,3 +6,25 @@
     - name: Ensure the user "timon" exists
       user:
         name: timon
+        # Hash generated with: python2 -c 'import crypt; print crypt.crypt("insecure_sudo_password", "$1$SomeSalt$")'
+        password: $1$SomeSalt$GGyCdEDXaPVrgnc6CZeZL0
+
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Allow 'wheel' group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+
+    - name: Add sudoers users to wheel group
+      user:
+        name: timon
+        groups: wheel
+        append: true
+        state: present

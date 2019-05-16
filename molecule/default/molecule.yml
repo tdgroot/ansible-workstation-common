@@ -6,8 +6,8 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: fedora29
-    image: tdgroot/fedora29-ansible:latest
+  - name: fedora30
+    image: tdgroot/fedora30-ansible:latest
     command: /usr/lib/systemd/systemd
     privileged: true
     volumes:
@@ -16,6 +16,8 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+    options:
+      x: ["302,305,306"]
 scenario:
   name: default
 verifier:
