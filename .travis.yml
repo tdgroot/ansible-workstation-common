@@ -10,8 +10,10 @@ before_install:
 install:
   - virtualenv --no-site-packages .venv
   - source .venv/bin/activate
-  - pip3 install ansible
-  - pip3 install -r install.txt
+  - python --version
+  - pip install ansible
+  - pip install -r install.txt
 script:
+  - python --version
   - source .venv/bin/activate
   - molecule test
