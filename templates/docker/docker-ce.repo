@@ -1,7 +1,7 @@
 [docker-ce-stable]
 name=Docker CE Stable - $basearch
 baseurl=https://download.docker.com/linux/fedora/$releasever/$basearch/stable
-enabled=1
+enabled=0
 gpgcheck=1
 gpgkey=https://download.docker.com/linux/fedora/gpg
 
@@ -43,7 +43,7 @@ gpgkey=https://download.docker.com/linux/fedora/gpg
 [docker-ce-test]
 name=Docker CE Test - $basearch
 baseurl=https://download.docker.com/linux/fedora/$releasever/$basearch/test
-enabled=0
+enabled=1
 gpgcheck=1
 gpgkey=https://download.docker.com/linux/fedora/gpg
 
