@@ -30,6 +30,10 @@
   template:
     src: templates/mariadb/.my.cnf.j2
     dest: "/Users/{{ primary_user }}/.my.cnf"
-    owner: "{{ primary_user }}"
-    group: "{{ primary_group }}"
+  tags: mariadb mysql
+
+- name: Create /usr/local/etc/my.cnf.d
+  file:
+    path: /usr/local/etc/my.cnf.d
+    state: directory
   tags: mariadb mysql
