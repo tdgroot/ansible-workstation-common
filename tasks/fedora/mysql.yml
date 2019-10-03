@@ -7,6 +7,7 @@
     state: present
   become: true
   tags: mariadb mysql
+  when: install_mariadb
 
 - name: Start mariadb service
   systemd:
@@ -15,6 +16,7 @@
     state: started
   become: true
   tags: mariadb mysql
+  when: install_mariadb
 
 - name: Set mariadb root password
   mysql_user:
@@ -23,7 +25,7 @@
     login_password: "{{ mysql_old_root_password }}"
   ignore_errors: true
   tags: mariadb mysql
-  when: mysql_root_password != mysql_old_root_password
+  when: install_mariadb and mysql_root_password != mysql_old_root_password
 
 - name: Create ~/.my.cnf
   template:
@@ -40,3 +42,4 @@
   notify: mariadb
   become: true
   tags: mariadb mysql
+  when: install_mariadb

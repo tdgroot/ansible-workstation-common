@@ -15,6 +15,7 @@ install_aws: true
 install_chrome: true
 install_docker: true
 install_openjdk: true
+install_mariadb: true
 install_magerun: true
 install_nvidia_drivers: false
 install_owncloud_client: true
