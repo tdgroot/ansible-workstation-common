@@ -7,6 +7,7 @@
     state: present
   become: true
   tags: mariadb mysql
+  when: install_mariadb
 
 - name: Start mariadb service
   systemd:
@@ -15,6 +16,7 @@
     state: started
   become: true
   tags: mariadb mysql
+  when: install_mariadb
 
 - name: Check if root password is set
   shell: >
@@ -22,7 +24,7 @@
   changed_when: false
   failed_when: false
   register: root_pwd_check
-  tags: mariadb
+  tags: mariadb mysql
 
 - name: Mysql root password for the first time (root@localhost)
   mysql_user:
@@ -31,7 +33,7 @@
     host: localhost
     state: present
   when: root_pwd_check.rc == 0
-  tags: mariadb
+  tags: mariadb mysql
 
 - name: Create ~/.my.cnf
   template:
@@ -48,3 +50,4 @@
   notify: mariadb
   become: true
   tags: mariadb mysql
+  when: install_mariadb

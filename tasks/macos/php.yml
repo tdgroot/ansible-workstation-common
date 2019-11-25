@@ -50,11 +50,10 @@
   template: src=templates/php/www.local.conf.j2 dest=/usr/local/etc/php/7.3/php-fpm.d/www.local.conf
   tags: php
 
-- name: Link php 7.1 as default php
-  shell: "brew link php@7.1 --force"
+- name: Link php 7.2 as default php
+  shell: "brew link --overwrite php@7.2 --force"
   register: brew_link_result
   changed_when: "'symlinks created' in brew_link_result.stdout"
-  become: true
 
 - name: Create php bin symlinks
   shell: "ln -fs $(find /usr/local/Cellar/php* -name 'php' -type f | grep {{ item.version }} | head -n 1) /usr/local/bin/{{ item.alias }}"
