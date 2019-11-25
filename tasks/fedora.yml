@@ -247,6 +247,10 @@
   become: true
   when: reverse_apple_keyboard_fn_keys
 
+- name: Install flatpak apps
+  include_tasks: fedora/flatpak.yml
+  tags: flatpak
+
 - name: Install Nvidia drivers
   dnf:
     name:
