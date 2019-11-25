@@ -32,6 +32,7 @@
     password: "{{ mysql_root_password }}"
     host: localhost
     state: present
+  become: true
   when: root_pwd_check.rc == 0
   tags: mariadb mysql
 
