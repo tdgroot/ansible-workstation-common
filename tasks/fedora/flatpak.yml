@@ -9,7 +9,7 @@
 
 - name: Install Atom
   flatpak:
-    name: atom
+    name: io.atom.Atom
     state: present
     method: user
   when: install_atom
