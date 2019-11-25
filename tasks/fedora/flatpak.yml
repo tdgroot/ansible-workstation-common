@@ -1,0 +1,34 @@
+---
+- name: Enable flathub remote
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+  tags: flatpak
+
+- name: Install Atom
+  flatpak:
+    name: atom
+    state: present
+    method: user
+  when: install_atom
+
+- name: Install DBeaver
+  flatpak:
+    name: io.dbeaver.DBeaverCommunity
+    state: present
+    method: user
+
+- name: Install Postman
+  flatpak:
+    name: com.getpostman.Postman
+    state: present
+    method: user
+
+- name: Install Spotify
+  flatpak:
+    name: com.spotify.Client
+    state: present
+    method: user
+  when: install_spotify
