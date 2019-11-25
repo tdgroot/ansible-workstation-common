@@ -16,14 +16,22 @@
   become: true
   tags: mariadb mysql
 
-- name: Set mariadb root password
+- name: Check if root password is set
+  shell: >
+    mysqladmin -u root status
+  changed_when: false
+  failed_when: false
+  register: root_pwd_check
+  tags: mariadb
+
+- name: Mysql root password for the first time (root@localhost)
   mysql_user:
     name: root
     password: "{{ mysql_root_password }}"
-    login_password: "{{ mysql_old_root_password }}"
-  ignore_errors: true
-  tags: mariadb mysql
-  when: mysql_root_password != mysql_old_root_password
+    host: localhost
+    state: present
+  when: root_pwd_check.rc == 0
+  tags: mariadb
 
 - name: Create ~/.my.cnf
   template:
