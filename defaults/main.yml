@@ -17,12 +17,12 @@ install_docker: true
 install_openjdk: true
 install_magerun: true
 install_nvidia_drivers: false
-install_owncloud_client: true
+install_owncloud_client: false
 install_spotify: true
 install_steam: false
 install_vagrant: true
 install_virtualbox: false
-install_wine: true
+install_wine: false
 mysql_root_password: mysql
 mysql_old_root_password: ''
 system_is_macmini: false
