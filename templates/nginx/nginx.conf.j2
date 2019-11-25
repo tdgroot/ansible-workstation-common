@@ -33,7 +33,7 @@ http {
     client_max_body_size    512M;
 
 {% if ansible_distribution == "Fedora" %}
-    client_body_temp_path {{ nginx_temp_directory }} 1 2;
+    client_body_temp_path   {{ nginx_temp_directory }} 1 2;
 {% endif %}
 
     fastcgi_buffers         16 16k;
