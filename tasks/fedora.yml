@@ -40,10 +40,10 @@
       - gstreamer
       - gstreamer-plugins-base
       - htop
-      - libselinux-python
       - mycli
       - nano
       - pv
+      - python3-libselinux
       - python3-docker
       - python3-mysql
       - redhat-rpm-config
