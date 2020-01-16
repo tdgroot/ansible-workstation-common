@@ -20,196 +20,73 @@
     path: "{{ php_session_directory }}"
     state: directory
 
-- name: Install php71
+- name: Install php
   dnf:
     name:
-      - php71-php
-      - php71-php-apcu
-      - php71-php-bcmath
-      - php71-php-fpm
-      - php71-php-gd
-      - php71-php-imagick
-      - php71-php-intl
-      - php71-php-json
-      - php71-php-mbstring
-      - php71-php-mcrypt
-      - php71-php-mysqlnd
-      - php71-php-opcache
-      - php71-php-pdo
-      - php71-php-pgsql
-      - php71-php-soap
-      - php71-php-xdebug
-      - php71-php-xml
-      - php71-php-zip
-      - php71-php-redis
-      - php71-php-process
+      - "php{{ item }}-php"
+      - "php{{ item }}-php-apcu"
+      - "php{{ item }}-php-bcmath"
+      - "php{{ item }}-php-fpm"
+      - "php{{ item }}-php-gd"
+      - "php{{ item }}-php-imagick"
+      - "php{{ item }}-php-intl"
+      - "php{{ item }}-php-json"
+      - "php{{ item }}-php-mbstring"
+      - "php{{ item }}-php-mysqlnd"
+      - "php{{ item }}-php-opcache"
+      - "php{{ item }}-php-pdo"
+      - "php{{ item }}-php-pgsql"
+      - "php{{ item }}-php-soap"
+      - "php{{ item }}-php-sodium"
+      - "php{{ item }}-php-xdebug"
+      - "php{{ item }}-php-xml"
+      - "php{{ item }}-php-zip"
+      - "php{{ item }}-php-redis"
+      - "php{{ item }}-php-process"
     state: present
-  notify: php71
+  notify: "php{{ item }}"
   become: true
   tags: php
-- name: Install php71 configuration
-  template:
-    src: templates/php/99-local.ini.j2
-    dest: /etc/opt/remi/php71/php.d/99-local.ini
-  notify: php71
-  become: true
-  tags: php
-- name: Install php71-php-fpm configuration
-  vars:
-    - php_fpm_port: 9071
-  template:
-    src: templates/php/www.local.conf.j2
-    dest: /etc/opt/remi/php71/php-fpm.d/www.local.conf
-  notify: php71
-  become: true
-  tags: php
-- name: Disable default php71 session.save_path
-  lineinfile:
-    path: /etc/opt/remi/php71/php-fpm.d/www.conf
-    regexp: '^(php_value\[session\.save_path\].*)'
-    backrefs: true
-    line: '; \1'
-  notify: php71
-  become: true
-- name: Start php71-php-fpm service
-  systemd:
-    name: php71-php-fpm
-    enabled: true
-    state: started
-  become: true
-  tags: php
+  loop: "{{ php_versions|flatten(levels=1) }}"
 
-- name: Install php72
-  dnf:
-    name:
-      - php72-php
-      - php72-php-apcu
-      - php72-php-bcmath
-      - php72-php-fpm
-      - php72-php-gd
-      - php72-php-imagick
-      - php72-php-intl
-      - php72-php-json
-      - php72-php-mbstring
-      - php72-php-mysqlnd
-      - php72-php-opcache
-      - php72-php-pdo
-      - php72-php-pgsql
-      - php72-php-soap
-      - php72-php-sodium
-      - php72-php-xdebug
-      - php72-php-xml
-      - php72-php-zip
-      - php72-php-redis
-      - php72-php-process
-    state: present
-  notify: php72
-  become: true
-  tags: php
-- name: Install php72 configuration
+- name: Install php configuration
   template:
     src: templates/php/99-local.ini.j2
-    dest: /etc/opt/remi/php72/php.d/99-local.ini
-  notify: php72
+    dest: "/etc/opt/remi/php{{ item }}/php.d/99-local.ini"
+  notify: "php{{ item }}"
   become: true
   tags: php
-- name: Install php72-php-fpm configuration
-  vars:
-    - php_fpm_port: 9072
-  template:
-    src: templates/php/www.local.conf.j2
-    dest: /etc/opt/remi/php72/php-fpm.d/www.local.conf
-  notify: php72
-  become: true
-  tags: php
-- name: Disable default php72 session.save_path
-  lineinfile:
-    path: /etc/opt/remi/php72/php-fpm.d/www.conf
-    regexp: '^(php_value\[session\.save_path\].*)'
-    backrefs: true
-    line: '; \1'
-  become: true
-  notify: php72
-- name: Start php72-php-fpm service
-  systemd:
-    name: php72-php-fpm
-    enabled: true
-    state: started
-  become: true
-  tags: php
-- name: php72-php-mcrypt is not installed
-  dnf:
-    name: php72-php-mcrypt
-    state: absent
-  notify: php72
-  become: true
-  tags: php
+  loop: "{{ php_versions|flatten(levels=1) }}"
 
-- name: Install php73
-  dnf:
-    name:
-      - php73-php
-      - php73-php-apcu
-      - php73-php-bcmath
-      - php73-php-fpm
-      - php73-php-gd
-      - php73-php-imagick
-      - php73-php-intl
-      - php73-php-json
-      - php73-php-mbstring
-      - php73-php-mysqlnd
-      - php73-php-opcache
-      - php73-php-pdo
-      - php73-php-pgsql
-      - php73-php-soap
-      - php73-php-sodium
-      - php73-php-xdebug
-      - php73-php-xml
-      - php73-php-zip
-      - php73-php-redis
-      - php73-php-process
-    state: present
-  notify: php73
-  become: true
-  tags: php
-- name: Install php73 configuration
-  template:
-    src: templates/php/99-local.ini.j2
-    dest: /etc/opt/remi/php73/php.d/99-local.ini
-  notify: php73
-  become: true
-  tags: php
-- name: Install php73-php-fpm configuration
+- name: Install PHP FPM configuration
   vars:
-    - php_fpm_port: 9073
+    - php_fpm_port: "{{ item }}"
   template:
     src: templates/php/www.local.conf.j2
-    dest: /etc/opt/remi/php73/php-fpm.d/www.local.conf
-  notify: php73
+    dest: "/etc/opt/remi/php{{ item }}/php-fpm.d/www.local.conf"
+  notify: "php{{ item }}"
   become: true
   tags: php
-- name: Disable default php73 session.save_path
+  loop: "{{ php_versions|flatten(levels=1) }}"
+
+- name: Disable default php session.save_path
   lineinfile:
-    path: /etc/opt/remi/php73/php-fpm.d/www.conf
+    path: "/etc/opt/remi/php{{ item }}/php-fpm.d/www.conf"
     regexp: '^(php_value\[session\.save_path\].*)'
     backrefs: true
     line: '; \1'
   become: true
-  notify: php73
-- name: Start php73-php-fpm service
+  notify: "php{{ item }}"
+  loop: "{{ php_versions|flatten(levels=1) }}"
+
+- name: Start PHP FPM service
   systemd:
-    name: php73-php-fpm
+    name: "php{{ item }}-php-fpm"
     enabled: true
     state: started
   become: true
   tags: php
-- name: php73-php-mcrypt is not installed
-  dnf:
-    name: php73-php-mcrypt
-    state: absent
-  notify: php73
-  become: true
-  tags: php
+  loop: "{{ php_versions|flatten(levels=1) }}"
 
 - name: Install composer
   dnf:
