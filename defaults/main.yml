@@ -28,3 +28,7 @@ mysql_root_password: mysql
 mysql_old_root_password: ''
 system_is_macmini: false
 reverse_apple_keyboard_fn_keys: false
+php_versions:
+  - 72
+  - 73
+  - 74
