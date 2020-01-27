@@ -2,7 +2,7 @@
 Description=Daemon that detects, checks and installs user provided nginx configuration files
 
 [Service]
-ExecStart=/usr/bin/nginx_config_reloader --monitor --nomagentoconfig --nocustomconfig --watchdir /home/{{ primary_user }}/nginx
+ExecStart=/usr/local/bin/nginx_config_reloader --monitor --nomagentoconfig --nocustomconfig --watchdir /home/{{ primary_user }}/nginx
 StandardOutput=null
 StandardError=journal
 RestartSec=10
