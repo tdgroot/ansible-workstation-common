@@ -22,7 +22,7 @@
     - .themes
     - bin
     - nginx
-    - projects
+    - Projects
 
 - name: Install simple programs
   dnf:

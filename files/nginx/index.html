@@ -97,7 +97,7 @@
 server {
     <span>listen</span> 80;
     <span>server_name</span> www.example.com.localhost;
-    <span>root</span> /home/USERNAME/projects/PATH;
+    <span>root</span> /home/USERNAME/Projects/PATH;
     <span>index</span> index.php;
 
     <span>include</span> default.conf;
@@ -106,7 +106,7 @@ server {
     <span>include</span> magento2.conf; # Only for Magento 2
 
     <span>location</span> ~ \.php$ {
-        <span>fastcgi_pass</span> php72; # Available PHP versions: php71, php72, php73
+        <span>fastcgi_pass</span> php72; # Available PHP versions: php72, php73, php74
         <span>include</span> php.conf;
     }
 }</pre>
