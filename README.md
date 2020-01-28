@@ -7,7 +7,7 @@ Workstation Common
 =================================
 
 Common tasks for installing and configuring Fedora Workstation and MacOS. It's a development stack using:
-- PHP (7.1, 7.2 and 7.3)
+- PHP (7.2, 7.3 and 7.4)
 - Node.js
 - NGINX (automatically tested and reloaded using [nginx_config_reloader](https://github.com/ByteInternet/nginx_config_reloader))
 - MariaDB
