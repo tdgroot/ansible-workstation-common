@@ -60,7 +60,7 @@
 
 - name: Install PHP FPM configuration
   vars:
-    - php_fpm_port: "{{ item }}"
+    - php_fpm_port: "90{{ item }}"
   template:
     src: templates/php/www.local.conf.j2
     dest: "/etc/opt/remi/php{{ item }}/php-fpm.d/www.local.conf"
