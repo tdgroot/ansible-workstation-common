@@ -37,8 +37,8 @@
       - gcc-c++
       - gnome-terminal-nautilus
       - gnome-tweak-tool
-      - gstreamer
-      - gstreamer-plugins-base
+      - gstreamer1
+      - gstreamer1-plugins-base
       - htop
       - mycli
       - nano
