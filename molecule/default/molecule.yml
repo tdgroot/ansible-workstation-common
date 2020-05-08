@@ -6,8 +6,8 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: fedora31
-    image: geerlingguy/docker-fedora31-ansible:latest
+  - name: fedora32
+    image: geerlingguy/docker-fedora32-ansible:latest
     command: /usr/lib/systemd/systemd
     privileged: true
     volumes:
