@@ -70,6 +70,14 @@ Example Playbook
       roles:
         - { role: tdgroot.workstation-common }
 
+Running the role on your system
+-------------------------------
+
+1. Create a playbook as described above.
+2. Install the role with `ansible-galaxy install tdgroot.workstation-common`.
+3. Run command `echo localhost > hosts`.
+4. Run command `ansible-playbook -i hosts <playbook.yml>`.
+
 License
 -------
 
