@@ -31,6 +31,7 @@
   mysql_user:
     name: root
     password: "{{ mysql_root_password }}"
+    check_implicit_admin: true
     host: localhost
     state: present
   become: true
