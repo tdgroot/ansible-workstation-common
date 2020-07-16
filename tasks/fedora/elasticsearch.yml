@@ -1,6 +1,6 @@
 ---
 - name: Import elasticsearch GPG key
-  rpm_key: 
+  rpm_key:
     state: present
     key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     fingerprint: 4609 5ACC 8548 582C 1A26 99A9 D27D 666C D88E 42B4
