@@ -5,6 +5,8 @@ group = {{ primary_user }}
 
 listen = 127.0.0.1:{{ php_fpm_port }}
 
+pm = ondemand
+
 {% if ansible_distribution == "Fedora" %}
 
 listen.acl_users = nginx
