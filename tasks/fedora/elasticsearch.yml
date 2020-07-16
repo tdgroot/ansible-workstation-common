@@ -21,7 +21,7 @@
     name: elasticsearch
 
 - name: Enable and start elasticsearch service
-  systemctl:
+  systemd:
     state: started
     name: elasticsearch
     enabled: true
