@@ -21,7 +21,7 @@ install_nvidia_drivers: false
 install_owncloud_client: false
 install_spotify: true
 install_steam: false
-install_vagrant: true
+install_vagrant: false
 install_virtualbox: false
 install_wine: false
 mysql_root_password: mysql

@@ -130,6 +130,10 @@
   include_tasks: fedora/mysql.yml
   tags: mariadb mysql
 
+- name: Install elasticsearch
+  include_tasks: fedora/elasticsearch.yml
+  tags: elasticsearch
+
 - name: Install redis
   dnf:
     name: redis

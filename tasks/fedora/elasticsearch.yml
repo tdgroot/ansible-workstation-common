@@ -1,0 +1,27 @@
+---
+- name: Import elasticsearch GPG key
+  rpm_key: 
+    state: present
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    fingerprint: 4609 5ACC 8548 582C 1A26 99A9 D27D 666C D88E 42B4
+
+- name: Configure elasticsearch RPM repository
+  yum_repository:
+    name: elasticsearch
+    description: Elasticsearch repository for 6.x packages
+    file: elasticsearch
+    baseurl: https://artifacts.elastic.co/packages/6.x/yum
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    gpgcheck: true
+    enabled: true
+
+- name: Install elasticsearch
+  dnf:
+    state: present
+    name: elasticsearch
+
+- name: Enable and start elasticsearch service
+  systemctl:
+    state: started
+    name: elasticsearch
+    enabled: true
