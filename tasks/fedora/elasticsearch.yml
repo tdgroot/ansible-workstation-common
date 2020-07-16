@@ -4,6 +4,7 @@
     state: present
     key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     fingerprint: 4609 5ACC 8548 582C 1A26 99A9 D27D 666C D88E 42B4
+  become: true
 
 - name: Configure elasticsearch RPM repository
   yum_repository:
@@ -14,14 +15,17 @@
     gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     gpgcheck: true
     enabled: true
+  become: true
 
 - name: Install elasticsearch
   dnf:
     state: present
     name: elasticsearch
+  become: true
 
 - name: Enable and start elasticsearch service
   systemd:
     state: started
     name: elasticsearch
     enabled: true
+  become: true
