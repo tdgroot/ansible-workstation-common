@@ -34,6 +34,7 @@
     check_implicit_admin: true
     host: localhost
     state: present
+    login_unix_socket: /var/lib/mysql/mysql.sock
   become: true
   when: root_pwd_check.rc == 0
   tags: mariadb mysql
