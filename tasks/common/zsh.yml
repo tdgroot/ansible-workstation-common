@@ -21,5 +21,6 @@
     owner: "{{ primary_user }}"
     group: "{{ primary_group }}"
     remote_src: true
+    mode: preserve
   when: not zshrc_file.stat.exists
   tags: zsh

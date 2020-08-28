@@ -3,7 +3,8 @@
   vars:
     disable_selinux: false
   pre_tasks:
-    - user:
+    - name: Create user
+      user:
         name: timon
   roles:
     - role_under_test

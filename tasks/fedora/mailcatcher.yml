@@ -11,6 +11,7 @@
   template:
     src: templates/mailcatcher/mailcatcher.service.j2
     dest: /usr/lib/systemd/system/mailcatcher.service
+    mode: preserve
   notify:
     - systemd
     - mailcatcher

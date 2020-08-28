@@ -45,12 +45,14 @@
     dest: "/home/{{ primary_user }}/.my.cnf"
     owner: "{{ primary_user }}"
     group: "{{ primary_group }}"
+    mode: preserve
   tags: mariadb mysql
 
 - name: Configure mariadb/mysql server
   copy:
     src: files/mysql/local.cnf
     dest: /etc/my.cnf.d/local.cnf
+    mode: preserve
   notify: mariadb
   become: true
   tags: mariadb mysql

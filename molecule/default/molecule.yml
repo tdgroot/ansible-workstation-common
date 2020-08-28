@@ -3,8 +3,6 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
 platforms:
   - name: fedora32
     image: geerlingguy/docker-fedora32-ansible:latest
@@ -12,6 +10,11 @@ platforms:
     privileged: true
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+lint: |
+  set -e
+  yamllint defaults/ files/ handlers/ meta/ tasks/ templates/ vars/
+  ansible-lint -x106,302,305,306 roles/ansible-workstation-common/
+  flake8 molecule/default/tests/
 provisioner:
   name: ansible
   lint:

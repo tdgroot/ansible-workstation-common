@@ -14,6 +14,7 @@
     state: directory
     owner: "{{ primary_user }}"
     group: "{{ primary_group }}"
+    mode: preserve
   with_items:
     - bin
     - nginx

@@ -12,60 +12,70 @@
     state: directory
     owner: "{{ primary_user }}"
     group: admin
+    mode: preserve
   tags: nginx
 
 - name: Install nginx/nginx.conf
   template:
     src: templates/nginx/nginx.conf.j2
     dest: /usr/local/etc/nginx/nginx.conf
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Install nginx/default.conf
   template:
     src: templates/nginx/default.conf.j2
     dest: /usr/local/etc/nginx/default.conf
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Install nginx/magento.conf
   template:
     src: templates/nginx/magento.conf.j2
     dest: /usr/local/etc/nginx/magento.conf
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Install nginx/magento2.conf
   template:
     src: templates/nginx/magento2.conf.j2
     dest: /usr/local/etc/nginx/magento2.conf
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Install nginx/wordpress.conf
   template:
     src: templates/nginx/wordpress.conf.j2
     dest: /usr/local/etc/nginx/wordpress.conf
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Install nginx/wordpress-multisite.conf
   template:
     src: templates/nginx/wordpress-multisite.conf.j2
     dest: /usr/local/etc/nginx/wordpress-multisite.conf
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Install nginx/conf.d/php-fpm.conf
   template:
     src: templates/nginx/php-fpm.conf.j2
     dest: /usr/local/etc/nginx/conf.d/php-fpm.conf
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Install nginx/conf.d/mailcatcher.conf
   template:
     src: templates/nginx/mailcatcher.conf.j2
     dest: /usr/local/etc/nginx/conf.d/mailcatcher.conf
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Install nginx/php.conf
   copy:
     src: files/nginx/php.conf
     dest: "{{ nginx_root_directory }}/php.conf"
+    mode: preserve
   notify: nginx
   tags: nginx
 - name: Create /var/www/html/default

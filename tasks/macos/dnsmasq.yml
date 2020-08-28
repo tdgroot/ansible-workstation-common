@@ -4,6 +4,7 @@
   copy:
     src: files/dnsmasq/localhost.conf
     dest: /usr/local/etc/dnsmasq.d/localhost.conf
+    mode: preserve
   tags: dnsmasq
 
 
@@ -18,6 +19,7 @@
   file:
     path: /etc/resolver
     state: directory
+    mode: preserve
   become: true
   tags: dnsmasq
 
@@ -25,6 +27,7 @@
   copy:
     src: files/dnsmasq/resolver/localhost
     dest: /etc/resolver/localhost
+    mode: preserve
   become: true
   tags: dnsmasq
 

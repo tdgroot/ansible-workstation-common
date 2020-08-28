@@ -17,6 +17,7 @@
     state: directory
     owner: "{{ primary_user }}"
     group: "{{ primary_group }}"
+    mode: preserve
   with_items:
     - .icons
     - .themes
@@ -95,6 +96,7 @@
   template:
     src: templates/sysctl/99-ipv6.conf
     dest: /etc/sysctl.d/99-ipv6.conf
+    mode: preserve
   notify:
     - sysctl
   become: true
@@ -104,6 +106,7 @@
   template:
     src: templates/idea/idea.conf
     dest: /etc/sysctl.d/idea.conf
+    mode: preserve
   notify:
     - sysctl
   become: true
@@ -172,6 +175,7 @@
   template:
     src: templates/docker/docker-ce.repo
     dest: /etc/yum.repos.d/docker-ce.repo
+    mode: preserve
   become: true
   when: install_docker
 - name: Check if docker could be installed
@@ -204,6 +208,7 @@
   copy:
     src: files/google-chrome/google-chrome.repo
     dest: /etc/yum.repos.d/google-chrome.repo
+    mode: preserve
   become: true
   when: install_chrome
 - name: Install Google Chrome
@@ -230,18 +235,21 @@
   file:
     path: /etc/sysfs.d
     state: directory
+    mode: preserve
   become: true
 
 - name: Set sleep mode to deep
   copy:
     content: deep
     dest: /etc/sysfs.d/mem_sleep.conf
+    mode: preserve
   become: true
 
 - name: Reverse Apple keyboard fn keys
   copy:
     content: options hid_apple fnmode=2
     dest: /etc/modprobe.d/hid_apple.conf
+    mode: preserve
   become: true
   when: reverse_apple_keyboard_fn_keys
 

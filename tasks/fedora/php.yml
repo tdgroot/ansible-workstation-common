@@ -19,6 +19,7 @@
   file:
     path: "{{ php_session_directory }}"
     state: directory
+    mode: preserve
 
 - name: Install php
   dnf:
@@ -53,6 +54,7 @@
   template:
     src: templates/php/99-local.ini.j2
     dest: "/etc/opt/remi/php{{ item }}/php.d/99-local.ini"
+    mode: preserve
   notify: "php{{ item }}"
   become: true
   tags: php
@@ -64,6 +66,7 @@
   template:
     src: templates/php/www.local.conf.j2
     dest: "/etc/opt/remi/php{{ item }}/php-fpm.d/www.local.conf"
+    mode: preserve
   notify: "php{{ item }}"
   become: true
   tags: php
