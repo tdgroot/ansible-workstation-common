@@ -9,7 +9,6 @@ before_install:
   - sudo apt-get -qq update
 install:
   - python --version
-  - pip install ansible
   - pip install -r install.txt
 script:
   - molecule test
