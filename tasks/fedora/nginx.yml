@@ -3,7 +3,7 @@
   file:
     path: "{{ nginx_temp_directory }}"
     state: directory
-    mode: preserve
+    mode: 0755
 - name: Install nginx
   dnf:
     name: nginx
@@ -15,7 +15,7 @@
   template:
     src: templates/nginx/nginx.conf.j2
     dest: /etc/nginx/nginx.conf
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -23,7 +23,7 @@
   template:
     src: templates/nginx/default.conf.j2
     dest: /etc/nginx/default.conf
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -31,7 +31,7 @@
   template:
     src: templates/nginx/magento.conf.j2
     dest: /etc/nginx/magento.conf
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -39,7 +39,7 @@
   template:
     src: templates/nginx/magento2.conf.j2
     dest: /etc/nginx/magento2.conf
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -47,7 +47,7 @@
   template:
     src: templates/nginx/wordpress.conf.j2
     dest: /etc/nginx/wordpress.conf
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -55,7 +55,7 @@
   template:
     src: templates/nginx/wordpress-multisite.conf.j2
     dest: /etc/nginx/wordpress-multisite.conf
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -63,7 +63,7 @@
   template:
     src: templates/nginx/php-fpm.conf.j2
     dest: /etc/nginx/conf.d/php-fpm.conf
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -71,7 +71,7 @@
   template:
     src: templates/nginx/mailcatcher.conf.j2
     dest: /etc/nginx/conf.d/mailcatcher.conf
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -79,7 +79,7 @@
   copy:
     src: files/nginx/php.conf
     dest: "{{ nginx_root_directory }}/php.conf"
-    mode: preserve
+    mode: 0644
   notify: nginx
   become: true
   tags: nginx
@@ -101,7 +101,7 @@
   template:
     src: templates/nginx_config_reloader/nginx-config-reloader.service
     dest: /usr/lib/systemd/system/nginx-config-reloader.service
-    mode: preserve
+    mode: 0644
   notify:
     - systemd
     - nginx-config-reloader

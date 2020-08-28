@@ -11,7 +11,7 @@
   template:
     src: "templates/mailcatcher/me.mailcatcher.plist.j2"
     dest: "{{ primary_homedir }}/Library/LaunchAgents/me.mailcatcher.plist"
-    mode: preserve
+    mode: 0644
   notify:
     - mailcatcher
   tags: mailcatcher

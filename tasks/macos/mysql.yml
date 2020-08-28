@@ -30,12 +30,12 @@
   template:
     src: templates/mariadb/.my.cnf.j2
     dest: "/Users/{{ primary_user }}/.my.cnf"
-    mode: preserve
+    mode: 0644
   tags: mariadb mysql
 
 - name: Create /usr/local/etc/my.cnf.d
   file:
     path: /usr/local/etc/my.cnf.d
     state: directory
-    mode: preserve
+    mode: 0755
   tags: mariadb mysql

@@ -10,7 +10,7 @@
   file:
     path: "{{ primary_homedir }}/.npmrc"
     state: touch
-    mode: preserve
+    mode: 0644
   changed_when: false
 
 - name: ~/.npmrc prefix

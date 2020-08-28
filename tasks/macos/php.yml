@@ -3,7 +3,7 @@
   file:
     path: "{{ php_session_directory }}"
     state: directory
-    mode: preserve
+    mode: 0755
 
 - name: Install php 7.1
   homebrew:
@@ -14,7 +14,7 @@
   template:
     src: templates/php/99-local.ini.j2
     dest: /usr/local/etc/php/7.1/conf.d/99-local.ini
-    mode: preserve
+    mode: 0644
   notify: php71
   tags: php
 - name: Install php71 fpm configuration
@@ -23,7 +23,7 @@
   template:
     src: templates/php/www.local.conf.j2
     dest: /usr/local/etc/php/7.1/php-fpm.d/www.local.conf
-    mode: preserve
+    mode: 0644
   notify: php71
   tags: php
 
@@ -36,7 +36,7 @@
   template:
     src: templates/php/99-local.ini.j2
     dest: /usr/local/etc/php/7.2/conf.d/99-local.ini
-    mode: preserve
+    mode: 0644
   notify: php72
   tags: php
 - name: Install php72 fpm configuration
@@ -45,7 +45,7 @@
   template:
     src: templates/php/www.local.conf.j2
     dest: /usr/local/etc/php/7.2/php-fpm.d/www.local.conf
-    mode: preserve
+    mode: 0644
   notify: php72
   tags: php
 
@@ -58,7 +58,7 @@
   template:
     src: templates/php/99-local.ini.j2
     dest: /usr/local/etc/php/7.3/conf.d/99-local.ini
-    mode: preserve
+    mode: 0644
   tags: php
 - name: Install php73 fpm configuration
   vars:
@@ -66,7 +66,7 @@
   template:
     src: templates/php/www.local.conf.j2
     dest: /usr/local/etc/php/7.3/php-fpm.d/www.local.conf
-    mode: preserve
+    mode: 0644
   tags: php
 
 - name: Link php 7.2 as default php
