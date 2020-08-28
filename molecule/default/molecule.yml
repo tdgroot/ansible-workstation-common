@@ -15,15 +15,5 @@ lint: |
   yamllint defaults/ files/ handlers/ meta/ tasks/ templates/ vars/
   ansible-lint -x106,302,305,306 roles/ansible-workstation-common/
   flake8 molecule/default/tests/
-provisioner:
-  name: ansible
-  lint:
-    name: ansible-lint
-    options:
-      x: ["302,305,306"]
 scenario:
   name: default
-verifier:
-  name: testinfra
-  lint:
-    name: flake8
