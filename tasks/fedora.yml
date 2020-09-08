@@ -19,9 +19,6 @@
     group: "{{ primary_group }}"
     mode: 0755
   with_items:
-    - .icons
-    - .themes
-    - bin
     - nginx
     - Projects
 
@@ -306,13 +303,13 @@
 - name: Install n98-magerun
   get_url:
     url: https://files.magerun.net/n98-magerun.phar
-    dest: "/home/{{ primary_user }}/bin/n98-magerun"
+    dest: "/home/{{ primary_user }}/.local/bin/n98-magerun"
     mode: u=rwx,g=rx,o=rx
   when: install_magerun
 - name: Install n98-magerun2
   get_url:
     url: https://files.magerun.net/n98-magerun2.phar
-    dest: "/home/{{ primary_user }}/bin/n98-magerun2"
+    dest: "/home/{{ primary_user }}/.local/bin/n98-magerun2"
     mode: u=rwx,g=rx,o=rx
   when: install_magerun
 
