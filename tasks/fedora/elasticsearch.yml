@@ -9,9 +9,9 @@
 - name: Configure elasticsearch RPM repository
   yum_repository:
     name: elasticsearch
-    description: Elasticsearch repository for 6.x packages
+    description: Elasticsearch repository for 7.x packages
     file: elasticsearch
-    baseurl: https://artifacts.elastic.co/packages/6.x/yum
+    baseurl: https://artifacts.elastic.co/packages/7.x/yum
     gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     gpgcheck: true
     enabled: true
