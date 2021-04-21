@@ -5,7 +5,7 @@ driver:
   name: docker
 platforms:
   - name: fedora32
-    image: geerlingguy/docker-{MOLECULE_DISTRO:-fedora33}-ansible:latest
+    image: geerlingguy/docker-${MOLECULE_DISTRO:-fedora33}-ansible:latest
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
