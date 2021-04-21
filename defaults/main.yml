@@ -5,12 +5,10 @@ disable_selinux: true
 primary_user: timon
 primary_group: timon
 primary_homedir: "/home/{{ primary_user }}"
-php_fpm_port: 9071
 php_session_directory: "{{ primary_homedir}}/.php-session"
 nginx_root_directory: "/etc/nginx"
 nginx_temp_directory: "{{ primary_homedir }}/.nginx-tmp"
 nginx_www_path: "/var/www/html"
-install_atom: true
 install_aws: true
 install_chrome: true
 install_docker: true
@@ -18,17 +16,10 @@ install_openjdk: true
 install_mariadb: true
 install_magerun: true
 install_nvidia_drivers: false
-install_owncloud_client: false
 install_spotify: true
-install_steam: false
-install_vagrant: false
-install_virtualbox: false
-install_wine: false
 mysql_root_password: mysql
 mysql_old_root_password: ''
-system_is_macmini: false
-reverse_apple_keyboard_fn_keys: false
 php_versions:
-  - 72
   - 73
   - 74
+  - 80

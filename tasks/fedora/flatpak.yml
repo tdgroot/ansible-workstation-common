@@ -7,13 +7,6 @@
     method: user
   tags: flatpak
 
-- name: Install Atom
-  flatpak:
-    name: io.atom.Atom
-    state: present
-    method: user
-  when: install_atom
-
 - name: Install DBeaver
   flatpak:
     name: io.dbeaver.DBeaverCommunity

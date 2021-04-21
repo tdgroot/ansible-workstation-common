@@ -8,4 +8,4 @@
     ansible_python_interpreter: /usr/bin/python3
     ansible_become_pass: ''
   roles:
-    - role: ansible-workstation-common
+    - role: tdgroot.ansible-workstation-common
