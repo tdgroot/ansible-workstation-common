@@ -5,11 +5,12 @@ driver:
   name: docker
 platforms:
   - name: fedora32
-    image: geerlingguy/docker-fedora32-ansible:latest
-    command: /usr/lib/systemd/systemd
-    privileged: true
+    image: geerlingguy/docker-{MOLECULE_DISTRO:-fedora33}-ansible:latest
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    privileged: true
+    pre_build_image: true
 lint: |
   set -e
   yamllint defaults/ files/ handlers/ meta/ tasks/ templates/ vars/
