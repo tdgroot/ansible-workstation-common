@@ -4,7 +4,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: fedora32
+  - name: fedora
     image: geerlingguy/docker-${MOLECULE_DISTRO:-fedora33}-ansible:latest
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
@@ -13,7 +13,6 @@ platforms:
     pre_build_image: true
 lint: |
   set -e
-  yamllint defaults/ files/ handlers/ meta/ tasks/ templates/ vars/
   ansible-lint -x106,302,305,306 roles/ansible-workstation-common/
   flake8 molecule/default/tests/
 scenario:

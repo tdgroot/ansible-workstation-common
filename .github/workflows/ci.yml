@@ -33,7 +33,7 @@ jobs:
 
       - name: Lint code.
         run: |
-          yamllint .
+          yamllint defaults/ files/ handlers/ meta/ molecule/ tasks/ templates/ vars/
 
   molecule:
     name: Molecule
