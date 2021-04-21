@@ -14,16 +14,12 @@ Common tasks for installing and configuring Fedora Workstation and MacOS. It's a
 - Redis
 - Dnsmasq
 - Elasticsearch
-- Mailcatcher. 
+- Mailcatcher
 
 All the other sugar included, such as:
 - Docker
-- Vagrant
-- VirtualBox
-- Wine
-- Atom
 - Google Chrome
-- AWS
+- AWS CLI
 - Composer
 - Magerun
 - Spotify
@@ -75,7 +71,7 @@ Running the role on your system
 -------------------------------
 
 1. Create a playbook as described above.
-2. Install the role with `ansible-galaxy install tdgroot.workstation-common`.
+2. Install the role with `ansible-galaxy install tdgroot.workstation_common`.
 3. Run command `echo localhost > hosts`.
 4. Run command `ansible-playbook -K <playbook.yml>`.
 
