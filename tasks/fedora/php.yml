@@ -10,6 +10,7 @@
   rpm_key:
     state: present
     key: https://rpms.remirepo.net/RPM-GPG-KEY-remi2020
+  become: true
 - name: Install Remi's RPM repository
   dnf:
     name: http://rpms.remirepo.net/fedora/remi-release-{{ ansible_distribution_version }}.rpm
