@@ -41,8 +41,8 @@ jobs:
     strategy:
       matrix:
         distro:
-          - fedora32
           - fedora33
+          - fedora34
 
     steps:
       - name: Check out the codebase.
