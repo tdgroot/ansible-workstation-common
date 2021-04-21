@@ -39,7 +39,6 @@
       - ansible
       - bzr
       - cloc
-      - dmidecode
       - dnf-plugins-core
       - filezilla
       - gcc-c++
@@ -75,17 +74,6 @@
   register: dnf_result
   until: dnf_result is succeeded
 
-- name: Get system product name
-  shell: "dmidecode -s system-product-name"
-  changed_when: false
-  register: system_product_name
-  become: true
-
-- name: Set macmini fact
-  set_fact:
-    system_is_macmini: true
-  when: system_product_name|lower is search("macmini")
-
 - name: Create snap symlink
   file:
     src: /var/lib/snapd/snap
@@ -117,15 +105,6 @@
   notify:
     - sysctl
   become: true
-
-- name: Install vagrant
-  dnf:
-    name:
-      - vagrant
-      - vagrant-sshfs
-    state: present
-  become: true
-  when: install_vagrant
 
 - name: Install openjdk
   dnf:
@@ -185,11 +164,6 @@
     mode: 0644
   become: true
   when: install_docker
-- name: Check if docker could be installed
-  command: "dnf search docker-ce"
-  register: dnf_search_docker
-  changed_when: false
-  when: install_docker
 - name: Install Docker
   dnf:
     name: docker-ce
@@ -231,13 +205,6 @@
   become: true
   when: install_chrome
 
-- name: Install Macmini wireless driver
-  dnf:
-    name: broadcom-wl
-    state: present
-  become: true
-  when: system_is_macmini
-
 - name: Init /etc/sysfs.d
   file:
     path: /etc/sysfs.d
@@ -252,19 +219,6 @@
     mode: 0644
   become: true
 
-- name: Reverse Apple keyboard fn keys
-  copy:
-    content: options hid_apple fnmode=2
-    dest: /etc/modprobe.d/hid_apple.conf
-    mode: 0644
-  become: true
-  when: reverse_apple_keyboard_fn_keys
-
-- name: Regenerate initramfs
-  shell: "dracut --regenerate-all --force"
-  become: true
-  when: reverse_apple_keyboard_fn_keys
-
 - name: Install flatpak apps
   include_tasks: fedora/flatpak.yml
   tags: flatpak
@@ -278,44 +232,6 @@
   become: true
   when: install_nvidia_drivers
 
-- name: Install Steam
-  dnf:
-    name: steam
-    state: present
-  become: true
-  when: install_steam
-
-- name: Install Owncloud
-  dnf:
-    name:
-      - owncloud-client
-      - owncloud-client-nautilus
-    state: present
-  become: true
-  when: install_owncloud_client
-
-- name: Install Virtualbox
-  dnf:
-    name: VirtualBox
-    state: present
-  become: true
-  when: install_virtualbox
-
-- name: Install Wine
-  dnf:
-    name:
-      - wine
-      - winetricks
-    state: present
-  become: true
-  when: install_wine
-
-- name: Install n98-magerun
-  get_url:
-    url: https://files.magerun.net/n98-magerun.phar
-    dest: "/home/{{ primary_user }}/.local/bin/n98-magerun"
-    mode: u=rwx,g=rx,o=rx
-  when: install_magerun
 - name: Install n98-magerun2
   get_url:
     url: https://files.magerun.net/n98-magerun2.phar
