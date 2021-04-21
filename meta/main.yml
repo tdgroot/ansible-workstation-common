@@ -1,6 +1,8 @@
 ---
 
 galaxy_info:
+  role_name: workstation_common
+  namespace: tdgroot
   author: Timon de Groot
   description: Install and configure Fedora Workstation
 
@@ -13,8 +15,8 @@ galaxy_info:
   platforms:
     - name: Fedora
       versions:
-        - 31
         - 32
+        - 33
     - name: MacOSX
       versions:
         - all
