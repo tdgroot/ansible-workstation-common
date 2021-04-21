@@ -13,6 +13,7 @@ Common tasks for installing and configuring Fedora Workstation and MacOS. It's a
 - MariaDB
 - Redis
 - Dnsmasq
+- Elasticsearch
 - Mailcatcher. 
 
 All the other sugar included, such as:
@@ -30,7 +31,7 @@ All the other sugar included, such as:
 - Many other tweaks.
 
 This project is tested and running on:
-- Fedora Workstation 32
+- Fedora Workstation 33
 - MacOS (**in development, tests need to be added**)
 
 Requirements
@@ -59,16 +60,16 @@ molecule test
 Example Playbook
 ----------------
 
-    - hosts: all
+Example filename: `workstation.yml`.
+
+    - hosts: localhost
       connection: local
       become_method: sudo
       vars:
         primary_user: john
         primary_group: john
-        ansible_python_interpreter: /usr/bin/python3
-        ansible_become_pass: ''
       roles:
-        - { role: tdgroot.workstation-common }
+        - tdgroot.workstation-common
 
 Running the role on your system
 -------------------------------
@@ -76,7 +77,7 @@ Running the role on your system
 1. Create a playbook as described above.
 2. Install the role with `ansible-galaxy install tdgroot.workstation-common`.
 3. Run command `echo localhost > hosts`.
-4. Run command `ansible-playbook -i hosts <playbook.yml>`.
+4. Run command `ansible-playbook -K <playbook.yml>`.
 
 License
 -------
