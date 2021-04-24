@@ -65,7 +65,7 @@ Example filename: `workstation.yml`.
         primary_user: john
         primary_group: john
       roles:
-        - tdgroot.workstation-common
+        - tdgroot.workstation_common
 
 Running the role on your system
 -------------------------------
