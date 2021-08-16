@@ -9,7 +9,7 @@
 - name: Import Remi's RPM repository GPG Keys
   rpm_key:
     state: present
-    key: https://rpms.remirepo.net/RPM-GPG-KEY-remi2020
+    key: https://rpms.remirepo.net/RPM-GPG-KEY-remi2021
   become: true
 - name: Install Remi's RPM repository
   dnf:
