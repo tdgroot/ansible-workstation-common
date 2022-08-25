@@ -2,6 +2,9 @@
 [![Ansible Role](https://img.shields.io/ansible/role/54428?style=flat-square)](https://galaxy.ansible.com/tdgroot/workstation_common/)
 [![Ansible Role](https://img.shields.io/ansible/role/d/54428?style=flat-square)](https://galaxy.ansible.com/tdgroot/workstation_common/)
 
+_**DEPRECATION NOTICE:**_
+
+_**Times have changed and so has the need for this Ansible workstation configuration. I have used it with my team for over 4 years to have a very feature-rich development environment deployed on either Fedora Workstation or MacOS. Eventually we moved to using Docker Compose based configurations (like Warden), because the maintanence burden was getting quite high, especially for MacOS. This repository has been archived and should be seen as a library of all kinds of Ansible stuff.**_
 
 Workstation Common
 =================================
